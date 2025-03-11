@@ -1,0 +1,4 @@
+Le analisi vengonoe seguite con la versione V11 del file .py che fa riferimento alla versione V12 del myelab.py
+
+Le analisi negono esweguite con la determinazione amnuale degli intervalli, sia temporale che di psi e rho,
+lasciando quella fatta ad un determinato istante.

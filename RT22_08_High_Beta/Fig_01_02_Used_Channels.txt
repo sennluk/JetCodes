@@ -1,0 +1,21 @@
+
+Fig.01 - Channel used:
+
+pnbi = w.nbi.ptot   # Total NBI Power
+pbolo = w.bolo.topi     # Tot rad power (improved) - Bolometry
+betan = w.efit.btnm      # Beta normalizaed - MHD
+wdia = w.efit.wdia   # Energy meas - diamag
+zeffv = w.zeff.zefv # Zeff vertical
+zeffh = w.zeff.zefh # Zeff Horizontal
+tmax = w.hrtx.tmax      # max Te max hrts (hrtx channel)
+ti = w.xcs.ti  # Ion temperature 
+dens = w.hrts.ne.slice(r=rad)  # density profile hrts at r=rad
+qu = w.efit.qax       # Simulated q on axis
+nr = w.tin.rnt # KN1 neutron rate
+gas = w.gash.eler # KN1 neutron rate
+
+
+
+Fig.02 - Channels used:
+pnbi_ = w.nbi.ptot   # Total NBI Power
+betan_ = w.efit.btnm      # Beta normalizaed - MHD

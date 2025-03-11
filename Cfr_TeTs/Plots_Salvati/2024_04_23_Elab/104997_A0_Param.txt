@@ -1,0 +1,25 @@
+{'shot': 104997, 'tlim1': 42, 'tlim2': 70, 'delta': 3, 'rad': 3.07, 'psi1': 0.0001, 'psi2': 0.015, 'rho1': 0.0089, 'rho2': 0.2, 'eP': 0.02, 'win_len': 15, 'deg_pol': 3, 'savefigs': 1, 'mypath': '/home/lsenni/Python_LS/Cfr_TeTs/2024_04_23_Elab/'}
+
+JPN =  104997
+t lim1 =  42
+t lim2 =  70
+TS position= [2.9666]
+Ece position =  [2.968]
+PSIi HRTS =  0.01  - Ri HRTS =  2.967
+PSIf HRTS =  0.015  - Rf HRTS =  2.983
+Number of PSI-HRTS Values =  2
+Psi-hrts average over a lenght (cm):  1.625
+PSIi ECE =  0.013  - Ri ECE =  2.828
+PSIf ECE =  0.009  - Rf ECE =  2.94
+Number of PSI-ECE Values =  5
+Psi-ece average over a lenght (cm):  11.2
+RHOi HRTS =  0.069  - Ri HRTS =  2.967
+RHOf HRTS =  0.194  - Rf HRTS =  3.097
+Number of RHO-HRTS Values =  8
+Rho-hrts average over a lenght (cm):  13.02
+RHOi ECE =  0.197  - Ri ECE =  2.688
+RHOf ECE =  0.185  - Rf ECE =  3.08
+Number of RHO-ECE Values =  15
+Rho-ece average over a lenght (cm):  39.2
+selected_time_mio: 55.978046
+selected_time_slice: 55.978046

@@ -1,0 +1,22 @@
+#%Module1.0#####################################################################
+##
+## modules modedect/global
+##
+## module_files/modedect/global  Written by Jeff Layton, modified E. giovannozzi
+##
+proc ModulesHelp { } {
+        global version modroot
+
+        puts stderr "modedect/personal- sets the Environment for the global version of modenalysis as seen by the other users"
+}
+
+module-whatis   "Sets the environment for the global version of modenalysis"
+
+# for Tcl script use only
+#set     home         /home/egio/
+
+
+prepend-path PATH /home/egio/python/newmodeanalysis
+prepend-path PYTHONPATH /home/egio/python/newmodeanalysis
+prepend-path PYTHONPATH /home/egio/python/eg-python-tools
+#prepend-path PYTHONPATH /home/egio/python/elms

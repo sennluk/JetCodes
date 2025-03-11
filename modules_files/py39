@@ -1,0 +1,21 @@
+#%Module1.0#####################################################################
+##
+## modules py39
+##
+## module_files/py39  Written by E. giovannozzi
+##
+proc ModulesHelp { } {
+        global version modroot
+
+        puts stderr "py37- sets the Environment for the personal/experimental version of modenalysis and py37"
+}
+
+module-whatis   "Sets the environment for the personal/experimental version of modenalysis"
+
+module load global
+module switch python/3.9
+module unload pgi
+module load ifort
+module use /usr/local/modules 
+module load pgi/14.4/nag
+module load pgi/14.4/flush/2.4.0   
