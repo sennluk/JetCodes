@@ -58,7 +58,7 @@ d = {
     'eP' : 0.03,         # Relative error assigned to the Ece data
     'win_len' : 15,      # Window lenght: number of points for the smooth with Savitsky-golay filter
     'deg_pol' : 3,       # Poly degree used for the smoothing 
-    'savefigs' : 1,      # 1--> save plots, 0 don't save.
+    'savefigs' : 0,      # 1--> save plots, 0 don't save.
     'mypath' : f'/home/lsenni/Python_LS/Cfr_TeTs/{timestr}_JPN_{JPN}_Plots/'  # folder to save plots
     }    
 
@@ -79,12 +79,14 @@ mye.def_range_av(d,vars)
 # mye.man_range(d,vars)
 print('### Def range ok !!!!! ###')
 
-graph.multiplot(d,vars)       ## Multiplot: general shot charachteristics
-graph.tprof(d,vars)        ## Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
-# graph.magax(d,vars)        ## Plot of the EFIT position of the magnetic axis over time
-# graph.psifig(d,vars)       ## Perform the plots for evaluating the PSI (manual) calculation for HRTS and ECE at t=tlim
-# graph.rhofig(d, vars)      ## Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim
-# graph.fig_cfr_rho(d, vars) ## Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
+# graph.multiplot(d,vars)    # Multiplot: general shot charachteristics
+graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
+# graph.magax(d,vars)        # Plot of the EFIT position of the magnetic axis over time
+# graph.psifig(d,vars)       # Perform the plots for evaluating the PSI (manual) calculation for HRTS and ECE at t=tlim
+# graph.rhofig(d, vars)      # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim
+graph.te_trends(d,vars)
+graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
+graph.fig_rat_dist(d,vars)   # CONTROLLARE!!!
 
 
 

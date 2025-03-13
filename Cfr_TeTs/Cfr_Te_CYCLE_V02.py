@@ -24,7 +24,8 @@ shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526,
 # 
 DB = {} # Empty general database 
 
-saveDB = 1 # 0: don't save, 1: save the DB
+saveDB = 0      # 0: don't save, 1: save the DB
+save_figures = 0  # 0: don't save, 1: save the figures
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
 
 fig,ax=plt.subplots(1, num = 'ECE vs HRTS')
@@ -44,10 +45,10 @@ for shot in shots:
         'rad' : 3.05,        # Major radius coordinate (in m) for the single position comparison 
         'psi1' : 0.003,      # Smallest PSI value for the PSI range
         'psi2' : 0.027,      # Highest PSI value for the PSI range
-        'eP' : 0.02,         # Relative error assigned to the Ece data
+        'eP' : 0.03,         # Relative error assigned to the Ece data
         'win_len' : 15,      # Window lenght: number of points for the smooth with Savitsky-golay filter
         'deg_pol' : 3,       # Poly degree used for the smooting 
-        'savefigs' : 0,      # 1--> save plots, 0 don't save.
+        'savefigs' : save_figures,      # 1--> save plots, 0 don't save.
         'mypath' : f'/home/lsenni/Python_LS/Cfr_TeTs/{timestr}_JPN_{JPN}_Plots/'  # folder to save plots
         }    
 
@@ -83,6 +84,10 @@ for shot in shots:
     ## Perform the plots for evaluating the RHO calculation for HRTS and ECE at t=tlim
     ##  RHO values are automatically evaluated and contained in 'ranges' array
     # graph.rhofig(d, vars)
+    
+    ## Plot of the Temeprature time trends (ECE and HRTS) - smoothed -
+    ## of the averages over the selected RHO ranges - With errorbars 
+    # graph.te_trends(d,vars)
 
     ## Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
     # graph.fig_cfr_rho(d, vars)
