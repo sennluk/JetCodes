@@ -25,7 +25,7 @@ shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526,
 DB = {} # Empty general database 
 
 saveDB = 0      # 0: don't save, 1: save the DB
-save_figures = 0  # 0: don't save, 1: save the figures
+save_figures = 1  # 0: don't save, 1: save the figures
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
 
 fig,ax=plt.subplots(1, num = 'ECE vs HRTS')
@@ -69,28 +69,28 @@ for shot in shots:
     # mye.man_range(d,vars)
     print('### Def range ok !!!!! ###')
     ## Multiplot: general shot charachteristics
-    # graph.multiplot(d,vars)
+    graph.multiplot(d,vars)
 
     ## Plot of the EFIT position of the magnetic axis over time
-    # graph.magax(d,vars)  # return 1 plot
+    graph.magax(d,vars)  # return 1 plot
 
     # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
-    # graph.tprof(d,vars) # return 1 plot
+    graph.tprof(d,vars) # return 1 plot
 
     ## Perform the plots for evaluating the PSI calculation for HRTS and ECE at t=tlim
     ##  PSI values are manually inserted
-    # graph.psifig(d,vars)
+    graph.psifig(d,vars)
 
     ## Perform the plots for evaluating the RHO calculation for HRTS and ECE at t=tlim
     ##  RHO values are automatically evaluated and contained in 'ranges' array
-    # graph.rhofig(d, vars)
+    graph.rhofig(d, vars)
     
     ## Plot of the Temeprature time trends (ECE and HRTS) - smoothed -
     ## of the averages over the selected RHO ranges - With errorbars 
-    # graph.te_trends(d,vars)
+    graph.te_trends(d,vars)
 
     ## Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-    # graph.fig_cfr_rho(d, vars)
+    graph.fig_cfr_rho(d, vars)
     
     ######################
     # shot = d['shot']

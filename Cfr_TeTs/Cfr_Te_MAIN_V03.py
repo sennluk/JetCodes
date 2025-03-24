@@ -24,11 +24,12 @@ di definire una temperatura di riferimento Tref al disopra della quale si fanno 
 - E' possibile scegliere se inserire manualmente o calcolare in automaticoi range di psi e rho utilizzati per le medie,
   commentando la funzione def_range (per il calcolo in automatico), si utilizzazo i valori di inzializzazione  
 V01: partendo dalla V=00 (e librerie legate) funzionante, vado eliminando cose superflue
-V03: defined as a function to implement the cycle
+V03: main defined as a function to implement the cycle
 """
 import matplotlib.pyplot as plt
 import Cfr_Te_LIB_V03 as mye
 import Cfr_Te_PLOTS_V03 as graph
+import Prova_Residui_V01 as plus
 import time
 
 # %reset
@@ -89,6 +90,8 @@ def pippo(JPN, save_figures):
     # graph.te_trends(d,vars)
     # graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
     # graph.fig_rat_dist(d,vars)   # CONTROLLARE!!!
+    
+    plus.res_an(d,vars)
     
     return (d,vars)
     

@@ -16,6 +16,7 @@ Functions:
 N.B.: Lascio i valori di OPSI come definiti in d--> per controlli e calcoli possibili    
 V02: cambio l'importazione dei dati per non avere nessun ppfs nel dizionario
 e poterlo salvare in json'
+V03: aggijngo i residui HRTS
 """
 import numpy as np
 import my_flush
@@ -63,30 +64,27 @@ def dictvar(d):
         'psiKk1' : None,    # PSI coordinates on the ECE-KK1 data points
         'psiTscalc' : None, # HRTS PSI Computed to check the correctnes of the data Channel iused
         'rhoKk1' : None,    # ECE-KK1 LoS PSI coordinates 
-        # 'time_ts' : None,
-        # 'time_ece' : None,
         'rhoTs' : None,     #RHO coordinates on the HRTS data points
         'rhoEce' : None,    # RHO coordinates on the ECE-KK1 data points
-        # 'temp_tsM' : None,  
-        # 'err_tsM': None,
         'timeTs2' : None,     # TS time instants in the ti-tf window
         'timeEce22' : None,   # ECE time instants closest to the TS ones in the ti-tf window     '
         'ranges' : None,      # RHO ranges as calculated by the automatic procedure at each HRTS time- TS interpolated in t1<t<t2
-        # 'xm': None,  
-        # 'err_xm' : None, 
-        # 'temp_eceM' : None, 
-        # 'err_eceM' : None, 
-        # 'xm12': None, 
-        # 'err_xm12' : None, 
-        # 'temp_eceM12' : None, 
-        # 'err_eceM12' : None, 
         'temp_tsM_rho' : None,   # Te values averaged over the rho1-rho2 interval for HRTS
         'err_tsM_rho' : None,    # Error on HRTS Te values averaged over the rho1-rho2 interval
         'temp_eceM_rho' : None,  # Te values averaged over the rho1-rho2 interval for ECE
         'err_eceM_rho' : None,   # Error on ECE Te values averaged over the rho1-rho2 interval
         'ratio' : None,          # Ratio between temperaure values (averaged) - TO BE double-checked!
         'distance' : None,       # Difference between temperaure values (averaged)
-        'err_dist' : None        # Computed error to be associated to the difference
+        'err_dist' : None,        # Computed error to be associated to the difference
+        'sig1' : None,     # Measured signals Chennl 1 HRTS
+        'fit1' : None,     # Fit values Channel 1
+        'sig2' : None,    # Measured signals Chennl 2 HRTS
+        'fit2' : None,    # Fit values Channel 2
+        'sig3' : None,    # Measured signals Chennl 3 HRTS
+        'fit3' : None,    # Fit values Channel 3
+        'sig4' : None,    # Measured signals Chennl 4 HRTS
+        'fit4' : None,    # Fit values Channel 4
+        'csqr' : None,    # Fit ChiSquare 
         } 
     
     shot = d['shot']
@@ -118,6 +116,16 @@ def dictvar(d):
     vars['rmag'] = w.efit.rmag.v    # r Magnetic Axe position
     vars['tmag'] = w.efit.rmag.t
     vars['zmag'] = w.efit.zmag.v    #  z Magn Ax pos
+    
+    vars['sig1'] = w.hrts.sig1  # Measured signals Chennl 1 HRTS
+    vars['fit1'] = w.hrts.fit1  # Fit values Channel 1
+    vars['sig2'] = w.hrts.sig2  # Measured signals Chennl 2 HRTS
+    vars['fit2'] = w.hrts.fit2  # Fit values Channel 2
+    vars['sig3'] = w.hrts.sig3  # Measured signals Chennl 3 HRTS
+    vars['fit3'] = w.hrts.fit3  # Fit values Channel 3
+    vars['sig4'] = w.hrts.sig4  # Measured signals Chennl 4 HRTS
+    vars['fit4'] = w.hrts.fit4  # Fit values Channel 4
+    vars['csqr'] = w.hrts.csqr  # Fit ChiSquare 
     
     if d['savefigs'] == 1: 
         mym.create_folder(d)

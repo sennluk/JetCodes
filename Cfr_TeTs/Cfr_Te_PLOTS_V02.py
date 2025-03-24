@@ -18,6 +18,7 @@ OSS: molte soluzioni nelle figure per l'articolo 'standardazing
 Aggiungo Ratio e difference e relativi plot''
 
 """
+#pippo
 import numpy as np
 from ppfeg import ppfs
 import matplotlib.pyplot as plt
@@ -368,11 +369,11 @@ def psifig(d,vars):
     return 1 
 ##################################################        
 
-def rhofig(d, vars): 
+def rho_fig(d, vars): 
     shot = d['shot']
     # rho1 = d['rho1']
     # rho2 = d['rho2']
-    tlim = vars['tlim']
+    tlim = 44#vars['tlim']
     tTs_v = vars['tTs_v']       # Chan. Te HRTS 
     tTs_t = vars['tTs_t']       # Chan. Te HRTS 
     tTs_r = vars['tTs_r']
@@ -387,7 +388,7 @@ def rhofig(d, vars):
     ####################
     timeEce = tEce_t
     timeTs = tTs_t
-    # Calcolo del profilo a dato tempo 
+    # Calcolo del profilo a dato tempo: seleziono l'oindice temporale
     idts = np.argmin(abs(timeTs - tlim))    
     ide= np.argmin(abs(timeEce - tlim))
 
@@ -446,13 +447,14 @@ def rhofig(d, vars):
     ax03.axhline(y = rho1, c='r',ls='--',lw=.4)
     ax03.axhline(y = rho2,c='r',ls='--',lw=.4)
     ax03.set_xlim(left = leftlim-0.1, right = rightlim+0.1)
+    # ax03.set_xlim(2.95, right = 3.20)
     ax03.set_ylim(bottom = rho1-0.05, top = rho2 + 0.01)
     ax03.set_xlabel('R (m)')
     ax03.set_ylabel(r'$\rho_N$')
-    ax03.legend(fontsize=10)#, loc = "upper left")
-    # ax003.set_title(f'JPN {shot} RHO(R) for HRTS and ECE-KK1 at t={tlim} sec')
+    ax03.legend() #fontsize=6, loc = "lower left")
+    ax003.set_title(f'JPN {shot} RHO(R) for HRTS and ECE-KK1 at t={tlim} sec')
     fig03.tight_layout()
-    # plt.savefig('Fig_06_LoSs_vs_Rho.pdf',bbox_inches="tight", dpi=300) # Per art
+    # plt.savefig('Fig_07_2_LoSs_vs_Rho.pdf',bbox_inches="tight", dpi=100) # Per art
     
     if d['savefigs'] == 1: 
        plt.savefig(d['mypath']+f'{shot}_RHO(R)_at_t.pdf',dpi=300)
@@ -600,7 +602,7 @@ def fig_cfr_rho(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm,
     ax.set_ylabel(r'$T_e$-ECE (keV)')
     ax.legend()
     fig.tight_layout()
-    plt.savefig('Fig_08_Tece_vs_Tts.pdf', bbox_inches="tight", dpi=100) # Per art
+    # plt.savefig('Fig_08_Tece_vs_Tts.pdf', bbox_inches="tight", dpi=100) # Per art
     
     if d['savefigs'] == 1: 
         plt.savefig(d['mypath']+f'{shot}_ECE vs HRTS.pdf',dpi=300)
@@ -620,14 +622,14 @@ def fig_cfr_rho(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm,
     # ax.plot(x, y, 'g--', lw=.8, label=r'$T_e$-ECE = $T_e$-HRTS')
     # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr=err_tsM_rho, yerr=err_eceM_rho, 
     #             marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5)
-    # fsize = 12
+    # fsize = 22
     # # Label e legenda
     # ax.set_xlabel(r'$T_e$-HRTS (keV)', fontsize = fsize)
     # ax.set_ylabel(r'$T_e$-ECE (keV)', fontsize = fsize)
     # ax.legend(fontsize = fsize, loc="upper left")
     # fig.tight_layout()
     # fig.canvas.draw()
-    # plt.savefig('Fig_08_Tece_vs_Tts.pdf', bbox_inches="tight", dpi=100)  # Usa lo stesso dpi per mantenere le proporzioni
+    # plt.savefig('Fig_08_2_Tece_vs_Tts.pdf', bbox_inches="tight", dpi=100)  # Usa lo stesso dpi per mantenere le proporzioni
     # plt.show()
 ##########################################
 # plot ratio vs time and difference vs time
@@ -688,7 +690,7 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
         plt.savefig(d['mypath']+f'{shot}_Diff_vs_Te.pdf',dpi=300)
         
     fig,ax=plt.subplots(1, num = 'Diff and err vs T_e ECE') # 
-    ax.errorbar(te_ece, distance, yerr=err_dist, 
+    ax.errorbar(te_ece, distance/te_ece, yerr=err_dist, 
                 marker='o', markersize=1, ecolor='g', linestyle='none', elinewidth=.5, label=r'Difference vs $T_e$-ECE') 
     #marker='o', s=1, )
     ax.axhline(y=0, c='r', ls='--', lw = 0.6)
