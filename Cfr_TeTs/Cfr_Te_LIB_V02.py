@@ -86,7 +86,8 @@ def dictvar(d):
         'err_eceM_rho' : None,   # Error on ECE Te values averaged over the rho1-rho2 interval
         'ratio' : None,          # Ratio between temperaure values (averaged) - TO BE double-checked!
         'distance' : None,       # Difference between temperaure values (averaged)
-        'err_dist' : None        # Computed error to be associated to the difference
+        'err_dist' : None,       # Computed error to be associated to the difference
+        'err_dist_perc' : None   # Computed error to be associated to the difference/Tece
         } 
     
     shot = d['shot']
@@ -206,8 +207,8 @@ def tdef(d,vars):
     print('JPN = ', d['shot'])
     print("Automated tlim1 =", ti)
     print("Automated tlim2 =", tf)
-    print('t lim1 = ', tlim1)
-    print('t lim2 = ', tlim2)
+    print('t lim1 = ', tlim1, ' None = Automatically computed')
+    print('t lim2 = ', tlim2, ' None = Automatically computed')
     print('Instant of the max Tmax=', tlim)
     
     return 1
@@ -415,7 +416,8 @@ def def_range_av(d,vars):
        temp = [iEce,i]
        indice2 = temp[indx]
        id_pluto = np.nanargmin(abs(diagm[:,indice2]-M)) 
-       # Creo 'pluto' che contiene il valore della diagnostica 'piu bassa' all'istante selezionato
+       # Creo 'pluto' che contiene il valore della diagnostica 'piu bassa' all'istante selezionato, più
+       # vicino al valore del massimo tra i due minimi:M
        pluto = diagm[id_pluto,indice2]
        
        rm = rDiag[indx]             # selezionop la diagnostica 'più bassa'
@@ -424,10 +426,10 @@ def def_range_av(d,vars):
        # Se la posizione del punto è prima del minimo aggiungo 'numero_punti' punti e determino la rho down
        # se invece è dopo, ne tolgo 'numero_punti'
        # in ambedue i casi tolgo poi un piccolo margine
-       # if pos_pluto < pos[ind]:
-       #     rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
-       # else:
-       #     rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
+       if pos_pluto < pos[ind]:
+           rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
+       else:
+           rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
        ranges[i,:] = [rhodown,rhoup]   
        # if id_pluto < indT:
        #     rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
@@ -454,7 +456,8 @@ def def_range_av(d,vars):
 
    ratio = temp_eceM_rho/temp_tsM_rho     # Ratio between temperaure values (averaged)
    distance = temp_eceM_rho-temp_tsM_rho  # Difference between temperaure values (averaged)
-   err_dist = np.sqrt(err_eceM_rho**2+err_tsM_rho**2)
+   err_dist = np.sqrt((err_eceM_rho/2)**2+(err_tsM_rho/2)**2)
+   err_dist_perc = (1/temp_eceM_rho)*(np.sqrt(temp_tsM_rho/temp_eceM_rho*err_eceM_rho)**2+(err_tsM_rho)**2)
    
    print('Dimensioni temp_eceM_rho = ',temp_eceM_rho.shape)
    print('Dimensioni temp_TsM_rho = ',temp_tsM_rho.shape)    
@@ -469,8 +472,13 @@ def def_range_av(d,vars):
    vars['ratio'] = ratio
    vars['distance'] = distance
    vars['err_dist'] = err_dist
+   vars['err_dist_perc'] = err_dist_perc
    # Si trova la matrice 'ranges' con tutti i valoori di rhoup/down a tutti gli istanti del TS
    # Si trovano qiundi le due matrici: temp_eceM_rho e temp_tsM_rho 
    # che contengono i valori di Te a tutte le rho e a tutte gli istanti tra t1 e t2
    # assi temporali: timeTs2 e timeEce2
    # le posizioni: rTs e rEce
+   
+   # Print dei valori degli intervalli sui quali si effetttua la media
+   tlim = vars['tlim'] # tempo al quale si ha la max Te-max
+   

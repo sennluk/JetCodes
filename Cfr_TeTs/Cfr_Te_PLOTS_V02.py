@@ -264,112 +264,10 @@ def magax(d,vars):
         plt.savefig(d['mypath']+f'{shot}_Mag_Ax_Pos.pdf',format = "pdf", dpi=300, bbox_inches="tight")
               
     return 1
-##################################################
-
-# plot the PSI trends of the LoSs
-def psifig(d,vars):
-    shot = d['shot']
-    psi1 = d['psi1']
-    psi2 = d['psi2']
-    tlim = vars['tlim']
-    tTs_v = vars['tTs_v']       # Chan. Te HRTS 
-    tTs_t = vars['tTs_t']       # Chan. Te HRTS 
-    tEce_v = vars['tEce_v']
-    tEce_t = vars['tEce_t']
-    tEce_r = vars['tEce_r']
-    psiTs_v = vars['psiTs_v']    # Channel psi hrts
-    psiTs_t = vars['psiTs_t']    # Channel psi hrts
-    psiTs_r = vars['psiTs_r'] 
-    psiKk1 = vars['psiKk1']
-    psi1 = vars['psi1']
-    psi2 = vars['psi2']
-   
-    ####################
-    timeEce = tEce_t
-    timeTs = tTs_t
-    # Calcolo del profilo a dato tempo 
-
-    idts = np.argmin(abs(timeTs - tlim))
-    psiTs_s = np.absolute(psiTs_v[:,idts]) # Abs del profilo psi hrts al tempo t=tlim   
-    
-    ide= np.argmin(abs(timeEce - tlim))
-    psiEce_s = psiKk1[:,ide]     # profilo psi ece al tempo t=tlim          
-
-    tempTs_s = tTs_v[:,idts]     # _s: slice at time..
-    tempEce_s = tEce_v[:,ide]
-    rTs = psiTs_r
-    rEce = tEce_r
-    # Seleziono gli indici corrispondenti all'intervallo in psi:psi1-psi2
-    idxPsiTs = ((psiTs_s >= psi1) & (psiTs_s <= psi2))
-    idxPsiE = ((psiEce_s >= psi1) & (psiEce_s <= psi2))  # Indici dell'array di PsiEce
-    
-    leftlim = min(min(rTs[idxPsiTs]), min(rEce[idxPsiE]) )
-    rightlim = max(max(rTs[idxPsiTs]), max(rEce[idxPsiE]) )
-    
-    fig01,(ax001, ax01) = plt.subplots(nrows=2, sharex = False, num = 'PSI LoS profiles')
-    ax001.plot(rTs, psiTs_s, linewidth=0.5, color='green', label= 'psi hrts')
-    ax001.plot(rEce, psiEce_s, linewidth=0.5, color='blue', label='psi ece')
-    ax001.set_ylabel('PSI')
-    ax001.legend()
-    ax001.axhline(y = psi1, c='r',ls='--',lw=.4)
-    ax001.axhline(y = psi2,c='r',ls='--',lw=.4)
-    ax01.plot(rTs, psiTs_s, linewidth=0.5, color='green', marker='o', ms=0.8, label= 'psi hrts')
-    ax01.plot(rTs[idxPsiTs], psiTs_s[idxPsiTs], linewidth=1.5, color='red', marker='o', ms=3, label=f'{psi1}<psi hrts<{psi2}')
-    ax01.plot(rEce, psiEce_s, linewidth=0.5, color='blue', marker='*', ms=0.8, label='psi ece')
-    ax01.plot(rEce[idxPsiE], psiEce_s[idxPsiE], linewidth=1.5, color='orange', marker='*', ms=3,  label=f'{psi1}<psi ece<{psi2}')
-    ax01.axhline(y = psi1, c='r',ls='--',lw=.4)
-    ax01.axhline(y = psi2,c='r',ls='--',lw=.4)
-    ax01.set_xlim(left = leftlim-0.1, right = rightlim+0.1)
-    ax01.set_ylim(bottom = psi1-0.01, top = psi2 + 0.01)
-    ax01.set_xlabel('R (m)')
-    ax01.set_ylabel('PSI')
-    ax01.legend()
-    ax001.set_title(f'JPN {shot} PSI(R) for HRTS and ECE-KK1 at t={tlim} sec')
-    fig01.tight_layout()
-    
-    if d['savefigs'] == 1: 
-        plt.savefig(d['mypath']+f'{shot}_PSI(R)_at_t.pdf',dpi=300)
-            
-        
-    fig02, ax02 = plt.subplots(nrows=1, sharex=True, num = 'Te vs PSI')
-    ax02.scatter(psiTs_s, tempTs_s/1000, marker='o', lw = 0.7, facecolors='none', edgecolors='darkorange', label='Te hrts') #s= 5, 
-    ax02.scatter(psiEce_s, tempEce_s/1000, marker='1', lw = 0.7, color = 'olive' ,label='Te ece - kk1') # s= 10,
-    ax02.axvline(x = psi1,c='r',ls='--',lw=.5)
-    ax02.axvline(x = psi2,c='r',ls='--',lw=.5)
-    ax02.set_xlabel('PSI')
-    ax02.set_ylabel('Electron Temperature (keV)')
-    ax02.legend()
-    ax02.set_title(f'JPN {shot} Te(PSI) profile at t={tlim} sec')
-    fig02.tight_layout()
-    
-    if d['savefigs'] == 1: 
-        plt.savefig(d['mypath']+f'{shot}_Te(psi)_at_t.pdf',dpi=300)
-      
-            # Trova l'ultimo indice di True
-
-    # Trova l'ultimo indice di True nella prima sequenza di True
-    ultimo_true_index = -1  # Valore di default se non trovati True
-    for i, valore in enumerate(idxPsiTs):
-        if valore:  # Se il valore è True
-            ultimo_true_index = i  # Aggiorna l'indice
-        elif ultimo_true_index != -1:  # Se trovi un False dopo aver trovato True
-            break  # Esci dal ciclo se hai già trovato un True
-    
-    print("Ultimo indice di True nella prima sequenza:", ultimo_true_index)
-      
-    print('PSIi HRTS = ', round(psiTs_s[idxPsiTs][0],3), ' - Ri HRTS = ', round(rTs[idxPsiTs][0],3))
-    print('PSIf HRTS = ', round(psiTs_s[idxPsiTs][-1],3), ' - Rf HRTS = ', round(rTs[idxPsiTs][-1],3))
-    print('Number of PSI-HRTS Values = ', psiTs_s[idxPsiTs].size)
-    print('Psi-hrts average over a length (cm): ', round((rTs[idxPsiTs][-1]-rTs[idxPsiTs][0])*100,3))
-    print('PSIi ECE = ', round(psiEce_s[idxPsiE][0],3), ' - Ri ECE = ', round(rEce[idxPsiE][0],3))
-    print('PSIf ECE = ', round(psiEce_s[idxPsiE][-1],3), ' - Rf ECE = ', round(rEce[idxPsiE][-1],3))
-    print('Number of PSI-ECE Values = ', psiEce_s[idxPsiE].size)
-    print('Psi-ece average over a length (cm): ', round((rEce[idxPsiE][-1]-rEce[idxPsiE][0])*100,3))
-
-    return 1 
+ 
 ##################################################        
 # Plot profili di Te in RHO ad un dato tempo: di dafault t=tlim : tempo un cui è max la Tmax
-def rho_profile_fig(d, vars): 
+def rho_fig(d, vars): 
     shot = d['shot']
     # rho1 = d['rho1']
     # rho2 = d['rho2']
@@ -412,7 +310,7 @@ def rho_profile_fig(d, vars):
     ax08.axvline(x = rho1, c='r',ls='--',lw=.4)
     ax08.axvline(x = rho2, c='r',ls='--',lw=.4)
     # ax08.set_title(f'JPN. {shot} - HRTS and Ece Te vs rho - Profile at t={tlim}')
-    ax08.set_title(f'HRTS and Ece Te profiles vs RHO - Profile at t={tempo} - Max Te')
+    ax08.set_title(f'HRTS and Ece Te profiles vs RHO - Profile at t={tempo:.2f} - Max Te')
     ax08.legend()
     ax08.set_xlabel('rho')    
     ax08.set_ylabel('Te (keV)')
@@ -458,15 +356,15 @@ def rho_profile_fig(d, vars):
     
     if d['savefigs'] == 1: 
        plt.savefig(d['mypath']+f'{shot}_RHO(R)_at_t.pdf',dpi=300)
-              
-    print('RHOi HRTS = ', round(rhoTs_s[idxRhoTs][0],3), ' - Ri HRTS = ', round(rTs[idxRhoTs][0],3))
-    print('RHOf HRTS = ', round(rhoTs_s[idxRhoTs][-1],3), ' - Rf HRTS = ', round(rTs[idxRhoTs][-1],3))
-    print('Number of RHO-HRTS Values = ', rhoTs_s[idxRhoTs].size)
-    print('Rho-hrts average over a lenght (cm): ', round((rTs[idxRhoTs][-1]-rTs[idxRhoTs][0])*100,3))
-    print('RHOi ECE = ', round(rhoEce_s[idxRhoE][0],3), ' - Ri ECE = ', round(rEce[idxRhoE][0],3))
-    print('RHOf ECE = ', round(rhoEce_s[idxRhoE][-1],3), ' - Rf ECE = ', round(rEce[idxRhoE][-1],3))
-    print('Number of RHO-ECE Values = ', rhoEce_s[idxRhoE].size)
-    print('Rho-ece average over a lenght (cm): ', round((rEce[idxRhoE][-1]-rEce[idxRhoE][0])*100,3))
+       
+    # print('RHOi HRTS = ', round(rhoTs_s[idxRhoTs][0],3), ' - Ri HRTS = ', round(rTs[idxRhoTs][0],3))
+    # print('RHOf HRTS = ', round(rhoTs_s[idxRhoTs][-1],3), ' - Rf HRTS = ', round(rTs[idxRhoTs][-1],3))
+    # print('Number of RHO-HRTS Values = ', rhoTs_s[idxRhoTs].size)
+    # print('Rho-hrts average over a lenght (cm): ', round((rTs[idxRhoTs][-1]-rTs[idxRhoTs][0])*100,3))
+    # print('RHOi ECE = ', round(rhoEce_s[idxRhoE][0],3), ' - Ri ECE = ', round(rEce[idxRhoE][0],3))
+    # print('RHOf ECE = ', round(rhoEce_s[idxRhoE][-1],3), ' - Rf ECE = ', round(rEce[idxRhoE][-1],3))
+    # print('Number of RHO-ECE Values = ', rhoEce_s[idxRhoE].size)
+    # print('Rho-ece average over a lenght (cm): ', round((rEce[idxRhoE][-1]-rEce[idxRhoE][0])*100,3))
        
     return fig03, ax03
 ##########################################
@@ -610,6 +508,7 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
     ratio = vars['ratio']
     distance = vars['distance']
     err_dist = vars['err_dist']
+    err_dist_perc = vars['err_dist_perc']
     time = vars['timeTs2']
     te_ece = vars['temp_eceM_rho']
     ####################         
@@ -662,11 +561,11 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
         plt.savefig(d['mypath']+f'{shot}_Diff_vs_Te.pdf',dpi=300)
         
     fig,ax=plt.subplots(1, num = 'Diff and err vs T_e ECE') # 
-    ax.errorbar(te_ece, distance/te_ece, yerr=err_dist, 
+    ax.errorbar(te_ece, distance, yerr=err_dist, 
                 marker='o', markersize=1, ecolor='g', linestyle='none', elinewidth=.5, label=r'Difference vs $T_e$-ECE') 
     #marker='o', s=1, )
     ax.axhline(y=0, c='r', ls='--', lw = 0.6)
-    ax.set_title(f'JPN {shot} - Difference (av. values) with errorbars vs time') 
+    ax.set_title(f'JPN {shot} - Difference (av. values) with errorbars vs Te-Ece') 
     ax.set_xlabel(r'$T_e$-ECE (keV)')
     ax.set_ylabel(r'$T_e$-ECE - $T_e$-TS')
     ax.legend()
@@ -674,3 +573,18 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
     
     if d['savefigs'] == 1: 
         plt.savefig(d['mypath']+f'{shot}_Diff_err_vs_Te.pdf',dpi=300)    
+        
+        
+    fig,ax=plt.subplots(1, num = 'Diff/T_ece and err vs T_e ECE') # 
+    ax.errorbar(te_ece, distance/te_ece, yerr=err_dist_perc, 
+                marker='o', markersize=1, ecolor='g', linestyle='none', elinewidth=.5, label=r'Difference vs $T_e$-ECE') 
+    #marker='o', s=1, )
+    ax.axhline(y=0, c='r', ls='--', lw = 0.6)
+    ax.set_title(f'JPN {shot} - Difference (av. values)/Te-ece with errorbars vs Te-Ece') 
+    ax.set_xlabel(r'$T_e$-ECE (keV)')
+    ax.set_ylabel(r'$T_e$-ECE - $T_e$-TS')
+    ax.legend()
+    fig.tight_layout()
+    
+    if d['savefigs'] == 1: 
+        plt.savefig(d['mypath']+f'{shot}_Diff_Perc_err_vs_Te.pdf',dpi=300)        

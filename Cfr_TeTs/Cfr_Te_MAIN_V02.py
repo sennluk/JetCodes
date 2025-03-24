@@ -56,10 +56,10 @@ d = {
     'rad' : 3.05,        # Major radius coordinate (in m) for the single position comparison 
     'psi1' : 0.003,      # Smallest PSI value for the PSI range
     'psi2' : 0.027,      # Highest PSI value for the PSI range
-    'eP' : 0.03,         # Relative error assigned to the Ece data
+    'eP' : 0.035,         # Relative error assigned to the Ece data
     'win_len' : 15,      # Window lenght: number of points for the smooth with Savitsky-golay filter
     'deg_pol' : 3,       # Poly degree used for the smoothing 
-    'savefigs' : 0,      # 1--> save plots, 0 don't save.
+    'savefigs' : 1,      # 1--> save plots, 0 don't save.
     'mypath' : f'/home/lsenni/Python_LS/Cfr_TeTs/{timestr}_JPN_{JPN}_Plots/'  # folder to save plots
     }    
 
@@ -80,18 +80,13 @@ mye.def_range_av(d,vars)
 # mye.man_range(d,vars)
 print('### Def range ok !!!!! ###')
 
-# graph.multiplot(d,vars)    # Multiplot: general shot charachteristics
-# graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
-# graph.magax(d,vars)        # Plot of the EFIT position of the magnetic axis over time
-# graph.psifig(d,vars)       # Perform the plots for evaluating the PSI (manual) calculation for HRTS and ECE at t=tlim
-graph.rho_profile_fig(d, vars)      # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim
-graph.te_trends(d,vars)
+graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
+graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
+graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
+graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
+graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
 graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-# graph.fig_rat_dist(d,vars)   # CONTROLLARE!!!
-
-
-
-
+graph.fig_rat_dist(d,vars)     # CONTROLLARE!!!
 
 
 
