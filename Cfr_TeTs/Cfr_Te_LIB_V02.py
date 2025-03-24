@@ -362,7 +362,7 @@ def def_range_av(d,vars):
        temp_ece22[:,i] = temp_ece2[:,iEce] 
        err_ece22[:,i] = err_ece2[:,iEce] 
        
-       mTs= np.nanmin(rhoTs2[:,i])     # min rho Ts at the ith indice    
+       mTs = np.nanmin(rhoTs2[:,i])         # min rho Ts at the ith indice    
        indT = np.nanargmin(rhoTs2[:,i])   
        posT = rTs[indT]  
        
@@ -381,48 +381,59 @@ def def_range_av(d,vars):
        # e vedo il punto più vicino della medesima curva
        # Come RHO-UP prendo poi il massimo dei due valori trovati + 0.001
        
-       diagM = diag[ind]  # La diagnostica che ha il massimo tra i due minimi
+       diagM = diag[ind]      #Le coord RHo della diagnostica che ha il massimo tra i due minimi
        radii = rDiag[ind]     # Le posiszioni della diagnostica di cui sopra
        
-       pos1 = pos[ind]- d2  # Posizione a distanza d/2 dal centro plasma
+       pos1 = pos[ind] - d2    # Posizione a distanza d/2 dal centro plasma (minimo rho)
        pos2 = pos[ind] + d2
        
-       idt1 = np.nanargmin(abs(radii-pos1)) # indice1 più vicino sulla curva più alta
-       idt2 = np.nanargmin(abs(radii-pos2))
-       # vettore dei valori più vicino alla posizione estrema dell'intervallo 
-       #(per la diagn che ha il max tra i due min)
+       idt1 = np.nanargmin(abs(radii-pos1))    # indice 1 più vicino alla pos 1 sulla curva più alta
+       idt2 = np.nanargmin(abs(radii-pos2))    # indice 2 più vicino alla pos 2 sulla curva più alta
+       
+       # Creo 'temp': il vettore con gli indici dei tempi per Ts e ECE 
+       # NO: un vettore dei valori più vicino alla posizione estrema dell'intervallo 
+       # NO:  (per la diagn che ha il max tra i due min)
        temp = [iEce,i]
-       indice1 = temp[ind]
-       pippo = [v1,v2] = [diagM[idt1,indice1],diagM[idt2,indice1]] 
-        
-       siaM = np.max(pippo) # Seleziono il pun to più alto tra i due, da scegliere come rho-up
+       indice1 = temp[ind]  # Prendo come indice quello per la diagnostica che ho selezionato come curva 'più alta'
+       # Creo pippo: contiene i due valori agli estremi della diagnostica 'superiore', 
+       # per vedere quale dei due è più alto all'istante di tempo in analisi
+       pippo = [v1,v2] = [diagM[idt1,indice1],diagM[idt2,indice1]] # array con 
+       #  
+       siaM = np.max(pippo) # Seleziono il punto più alto tra i due, da scegliere come rho-up
        rhoup = siaM + 0.0001 # aggiungo un piccolo delta di sicurezza
        
        #############################
        # RHO down
        # Trovo il punto più vicino della diag non considerata prima
-       # seleziono l'altra diagnostica: minimo rta i due massimi
+       # seleziono l'altra diagnostica: minimo tra i due massimi
        indx = np.argmin(([mEce,mTs]))   # Trovo il minimo tra i due minimi
        rm = rDiag[indx]                 # Le posiszioni della diagnostica di cui sopra
        diagm = diag[indx]               # seleziono la diagnostica 'piu bassa'
-       # trovo l'indice del punto con rho piu vicina al minimo dell'altra:
+       # Trovo l'indice del punto con rho piu vicina al minimo dell'altra:
        # avendo assi temporali diversi devo secegliere indici diversi a secondo del caso    
+       # ripentedo il criterio già usato prima,
        temp = [iEce,i]
        indice2 = temp[indx]
        id_pluto = np.nanargmin(abs(diagm[:,indice2]-M)) 
-       pluto = diagm[id_pluto,i]
+       # Creo 'pluto' che contiene il valore della diagnostica 'piu bassa' all'istante selezionato
+       pluto = diagm[id_pluto,indice2]
        
-       rm = rDiag[indx]             # posizioni radiali della diagostica 'minore'
-       pos_pluto = rm[id_pluto]
+       rm = rDiag[indx]             # selezionop la diagnostica 'più bassa'
+       pos_pluto = rm[id_pluto]     # Posizioni radiali della diagostica 'più bassa'
        
-       # se il punto è prima del minimo aggiungo due punti per determinare la rho down
-       # se invece è dopo, ne tolgo due
+       # Se la posizione del punto è prima del minimo aggiungo 'numero_punti' punti e determino la rho down
+       # se invece è dopo, ne tolgo 'numero_punti'
        # in ambedue i casi tolgo poi un piccolo margine
-       if id_pluto < indT:
-           rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
-       else:
-           rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
-       ranges[i,:] = [rhodown,rhoup]       
+       # if pos_pluto < pos[ind]:
+       #     rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
+       # else:
+       #     rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
+       ranges[i,:] = [rhodown,rhoup]   
+       # if id_pluto < indT:
+       #     rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
+       # else:
+       #     rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
+       # ranges[i,:] = [rhodown,rhoup]       
        
        mask = (rhoTs2[:,i] >= rhodown) & (rhoTs2[:,i] <= rhoup)    # Seleziono gli indici dei tempi di interesse 
        temp = temp_ts2[mask,i]                    # Valori di temperaatura nelle rho selezionate

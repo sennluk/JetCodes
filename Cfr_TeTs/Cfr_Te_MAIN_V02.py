@@ -49,7 +49,7 @@ d = {
     'window_size' : 10,  # Number of points for the moving average used for ti and tf computation
     'min_increase': 0.0, # Minimum increase in the time window to be considered for the ti 
     'd2' : 0.08,         # Half interval (in cm) around the plasma center used to average values of HRTS and ECE 
-    'np' : 0,            # Number of acquisition data points to add in computing the RHO ranges
+    'np' : 1,            # Number of acquisition data points to add in computing the RHO ranges
     'fix' : 0.01,        # Delta to be safer in the RHO and PSI ranges determination
     'intPsi' : 0.1,      # PSI range for the average  
     'delta' : 3,         # Time (in sec) to be added to the ti-tf interval for multiplosts figure 
@@ -87,7 +87,7 @@ print('### Def range ok !!!!! ###')
 graph.rho_profile_fig(d, vars)      # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim
 graph.te_trends(d,vars)
 graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-graph.fig_rat_dist(d,vars)   # CONTROLLARE!!!
+# graph.fig_rat_dist(d,vars)   # CONTROLLARE!!!
 
 
 
