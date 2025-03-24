@@ -286,15 +286,16 @@ def rhocalc(d, vars):
 ################################################## Ranges and averages
 # Computes the RHO ranges for each of the slowest Diagnostics (HRTS)
 # compute the values of ECE nearest to the same instants
-# Perform the averages on the selctes RHO ranges, instant by instnat 
+# Perform the averages on the seleted RHO ranges, instant by instnat 
 # of the Te values and errors for both ECE and HRTS
 # il 2 finale indica la grandezza nell'intervallo ti-tf
-# il 22 indica che la medesima grandezza è stata calcolate nei punti piuù vicini
-# a quella più lenta, sempre nellintervallo ti-tf
+# il 22 indica che la medesima grandezza è stata calcolate nei punti più vicini
+# a quella più lenta, sempre nell'intervallo ti-tf
  
 def def_range_av(d,vars):
    eP = d['eP']
    d2 = d['d2']
+   numero_punti = d['np']
    ti = vars['ti']
    tf = vars['tf'] 
    tTs_v = vars['tTs_v']
@@ -365,9 +366,9 @@ def def_range_av(d,vars):
        indT = np.nanargmin(rhoTs2[:,i])   
        posT = rTs[indT]  
        
-       mEce = np.nanmin(rhoEce2[:,iEce])   # min rho Ece at the i-th indice
-       indE = np.nanargmin(rhoEce2[:,iEce]) # indice del minimo sopra calcolato
-       posE = rEce[indE]                  # Position of the rho ECE minimum val
+       mEce = np.nanmin(rhoEce2[:,iEce])     # min rho Ece at the i-th indice
+       indE = np.nanargmin(rhoEce2[:,iEce])  # indice del minimo sopra calcolato
+       posE = rEce[indE]                     # Position of the rho ECE minimum val
        
        M = np.max([mEce,mTs])        # Trovo il massimo tra i due minimi
        ind = np.argmax(([mEce,mTs])) # per definire la diagnostica sulla Los della quale si trova il max:
@@ -402,8 +403,8 @@ def def_range_av(d,vars):
        # Trovo il punto più vicino della diag non considerata prima
        # seleziono l'altra diagnostica: minimo rta i due massimi
        indx = np.argmin(([mEce,mTs]))   # Trovo il minimo tra i due minimi
-       rm = rDiag[indx]     # Le posiszioni della diagnostica di cui sopra
-       diagm = diag[indx]      # seleziono la diagnostica 'piu bassa'
+       rm = rDiag[indx]                 # Le posiszioni della diagnostica di cui sopra
+       diagm = diag[indx]               # seleziono la diagnostica 'piu bassa'
        # trovo l'indice del punto con rho piu vicina al minimo dell'altra:
        # avendo assi temporali diversi devo secegliere indici diversi a secondo del caso    
        temp = [iEce,i]
@@ -411,16 +412,16 @@ def def_range_av(d,vars):
        id_pluto = np.nanargmin(abs(diagm[:,indice2]-M)) 
        pluto = diagm[id_pluto,i]
        
-       rm = rDiag[indx]     # posizioni radiali della diagostica 'minore'
+       rm = rDiag[indx]             # posizioni radiali della diagostica 'minore'
        pos_pluto = rm[id_pluto]
        
        # se il punto è prima del minimo aggiungo due punti per determinare la rho down
        # se invece è dopo, ne tolgo due
        # in ambedue i casi tolgo poi un piccolo margine
        if id_pluto < indT:
-           rhodown = diagm[id_pluto+d['np'],indice2] - 0.001
+           rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
        else:
-           rhodown = diagm[id_pluto-d['np'],indice2] - 0.001
+           rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
        ranges[i,:] = [rhodown,rhoup]       
        
        mask = (rhoTs2[:,i] >= rhodown) & (rhoTs2[:,i] <= rhoup)    # Seleziono gli indici dei tempi di interesse 

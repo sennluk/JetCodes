@@ -18,7 +18,7 @@ OSS: molte soluzioni nelle figure per l'articolo 'standardazing
 Aggiungo Ratio e difference e relativi plot''
 
 """
-#pippo
+# Branch new_plots - 24/03/2025
 import numpy as np
 from ppfeg import ppfs
 import matplotlib.pyplot as plt
@@ -368,12 +368,12 @@ def psifig(d,vars):
 
     return 1 
 ##################################################        
-
-def rho_fig(d, vars): 
+# Plot profili di Te in RHO ad un dato tempo: di dafault t=tlim : tempo un cui è max la Tmax
+def rho_profile_fig(d, vars): 
     shot = d['shot']
     # rho1 = d['rho1']
     # rho2 = d['rho2']
-    tlim = 44#vars['tlim']
+    tlim = vars['tlim']
     tTs_v = vars['tTs_v']       # Chan. Te HRTS 
     tTs_t = vars['tTs_t']       # Chan. Te HRTS 
     tTs_r = vars['tTs_r']
@@ -467,34 +467,6 @@ def rho_fig(d, vars):
     print('RHOf ECE = ', round(rhoEce_s[idxRhoE][-1],3), ' - Rf ECE = ', round(rEce[idxRhoE][-1],3))
     print('Number of RHO-ECE Values = ', rhoEce_s[idxRhoE].size)
     print('Rho-ece average over a lenght (cm): ', round((rEce[idxRhoE][-1]-rEce[idxRhoE][0])*100,3))
-        
-    ################# Check plot for RHO computatios
-    # rhoEce_s   # profilo rho ece al tempo t=tlim
-    # rho mio: rhoMio
-    rhoTs_s = rhoTs[:,idts]  # Profilo rho hrts al tempo t=tlim 
-    selected_time_mio = tTs_t[idts]
-    print('selected_time_mio:',selected_time_mio)
-    
-    # Rho Flush: rhoPPF
-    # Rho flush idts: rhoFlush
-    w = ppfs(shot)
-    rhoPpf = w.hrts.rho
-    idx = np.argmin(abs(rhoPpf.t - tlim))
-    rhoPpf_s = rhoPpf.v[:,idx]
-    rhoFlush = np.abs(rhoPpf_s)
-    selected_time_slice = rhoPpf.t[idx]
-    print('selected_time_slice:',selected_time_slice)
-    
-    # Plot di confronto tra i diversi modi di calcolare RHo: coord di flusso toroidale
-    plt.figure()
-    plt.plot(rTs, rhoTs_s, label='RHO-tor norm')
-    plt.plot(rTs, rhoFlush, label='Norm Min Rad from Flush')
-    plt.xlabel('R(m)')
-    plt.ylabel('RHO')
-    plt.legend()
-    plt.title(f'JPN {shot} - Check plot: RHO-TORn HRTS vs Normalized Minor Radius from FLUSH(HRTS chann)')  
-    if d['savefigs'] == 1: 
-       plt.savefig(d['mypath']+f'{shot}_RHO-torN vs NomrMinRad.pdf',dpi=300)
        
     return fig03, ax03
 ##########################################
