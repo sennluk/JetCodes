@@ -47,7 +47,7 @@
   780  cd ..
   781  vim .gitignore
   782  git checkout
-  783  git branch new_plots
+  783  git branch new_plots     % Per creare nuovo branch:' new_plots'
   784  git checkout new_plots
   785  git checkout main
   786  git checkout new_plots
@@ -59,9 +59,9 @@
   792  git checkout new_plots
   793  git commit -am'commit del new_plots'
   794  git branch
-  795  git checkout main 
-  796  git checkout new_plots
-  797  git branch
+  795  git checkout main          % Per cambiare branch e andare nel 'main'
+  796  git checkout new_plots     % Per cambiare branch e andare nel 'new_plots'
+  797  git branch                 % Per vedere tutti i branch esistenti  
   798  git checkout
   799  git commit -am'commit del new_plots'
   800  git push
