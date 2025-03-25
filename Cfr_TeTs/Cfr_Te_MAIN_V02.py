@@ -37,7 +37,7 @@ import time
 plt.close('all')  
 # save = 0 # 1--> salva i grafici, 0 non li salva
 # Scelgo lo shot
-JPN = 104522 #104990 # 104522 # 104525 #104990  #96994
+JPN = 104522 # 104549 # 104522 #104990 # 104522 # 104525 #104990  #96994
 # DTE3 shot list: 104990,991,994,995,999   
 # 104520,521,522,523,524,526
 
@@ -45,21 +45,21 @@ timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name gener
 
 d = {
     'shot' : JPN,        # 99950, 99971, 99970
-    'Tref' : 1,          # (keV) Reference temperature: time instants with Te values above Tref are considered
-    'window_size' : 10,  # Number of points for the moving average used for ti and tf computation
+    'Tref' : 2,          # (keV) Reference temperature: time instants with Te values above Tref are considered
+    'window_size' : 20,  # Number of points for the moving average used for ti and tf computation
     'min_increase': 0.0, # Minimum increase in the time window to be considered for the ti 
     'd2' : 0.08,         # Half interval (in cm) around the plasma center used to average values of HRTS and ECE 
     'np' : 1,            # Number of acquisition data points to add in computing the RHO ranges
     'fix' : 0.01,        # Delta to be safer in the RHO and PSI ranges determination
     'intPsi' : 0.1,      # PSI range for the average  
-    'delta' : 3,         # Time (in sec) to be added to the ti-tf interval for multiplosts figure 
+    'delta' : 1,         # Time (in sec) to be added to the ti-tf interval for multiplosts figure 
     'rad' : 3.05,        # Major radius coordinate (in m) for the single position comparison 
     'psi1' : 0.003,      # Smallest PSI value for the PSI range
     'psi2' : 0.027,      # Highest PSI value for the PSI range
     'eP' : 0.035,         # Relative error assigned to the Ece data
     'win_len' : 15,      # Window lenght: number of points for the smooth with Savitsky-golay filter
     'deg_pol' : 3,       # Poly degree used for the smoothing 
-    'savefigs' : 1,      # 1--> save plots, 0 don't save.
+    'savefigs' : 0,      # 1--> save plots, 0 don't save.
     'mypath' : f'/home/lsenni/Python_LS/Cfr_TeTs/{timestr}_JPN_{JPN}_Plots/'  # folder to save plots
     }    
 

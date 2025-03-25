@@ -204,6 +204,7 @@ def tdef(d,vars):
     vars['tlim'] = tlim
     vars['tmax'] = TMAX
     
+    print('------------ Start new shot!!! ------------')
     print('JPN = ', d['shot'])
     print("Automated tlim1 =", ti)
     print("Automated tlim2 =", tf)

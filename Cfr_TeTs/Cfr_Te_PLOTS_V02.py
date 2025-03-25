@@ -31,11 +31,12 @@ def multiplot(d,vars):
     tlim1 = vars['ti'] # Tolgo i 40 secondi di norma del JET 
     tlim2 = vars['tf']
     rad = vars['rad']
+    delta = d['delta']
     ##################
        
     w = ppfs(shot) 
-    tlim1 = tlim1-40 # Tolgo i 40 secondi di norma del JET #-delta
-    tlim2 = tlim2+1-40 # Tolgo i 40 secondi di norma del JET  #+delta
+    tlim1 = tlim1-40-delta # Tolgo i 40 secondi di norma del JET #-delta
+    tlim2 = tlim2-40+delta # +1 #  Tolgo i 40 secondi di norma del JET  #+delta
     
     btor = w.magn.bvac   # toroidal magnetic field
     idt = (btor.t-40 >= tlim1) & (btor.t-40 <= tlim2) 
@@ -137,6 +138,7 @@ def multiplot(d,vars):
     ax5.yaxis.set_tick_params(labelsize=fst)
     ax5.legend(fontsize = fonts, loc="upper left").set_draggable(True)
     
+    # posne = round(rad,2)
     ax6.plot(tNe, ne, lw = linew, color='darkblue', label=f'Density at R={rad} m')
     ax6.set_ylabel('$10^{19} m^{-3}$', fontsize= fs)
     ax6.yaxis.set_tick_params(labelsize=fst)
@@ -512,29 +514,29 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
     time = vars['timeTs2']
     te_ece = vars['temp_eceM_rho']
     ####################         
-    fig,ax=plt.subplots(1, num = 'Ratio vs time') # 
-    ax.plot(time,ratio, lw=.8, label=r'$T_e$-ECE / $T_e$-HRTS')
-    ax.axhline(y=1, c='r', ls='--', lw = 0.6)
-    ax.set_title(f'JPN {shot} - Ratio vs time') 
-    ax.set_xlabel('time(s)')
-    ax.set_ylabel(r'$T_e$-ECE / $T_e$-TS')
-    ax.legend()
-    fig.tight_layout()
+    # fig,ax=plt.subplots(1, num = 'Ratio vs time') # 
+    # ax.plot(time,ratio, lw=.8, label=r'$T_e$-ECE / $T_e$-HRTS')
+    # ax.axhline(y=1, c='r', ls='--', lw = 0.6)
+    # ax.set_title(f'JPN {shot} - Ratio vs time') 
+    # ax.set_xlabel('time(s)')
+    # ax.set_ylabel(r'$T_e$-ECE / $T_e$-TS')
+    # ax.legend()
+    # fig.tight_layout()
     
-    if d['savefigs'] == 1: 
-        plt.savefig(d['mypath']+f'{shot}_Ratio_vs_time.pdf',dpi=300)
+    # if d['savefigs'] == 1: 
+    #     plt.savefig(d['mypath']+f'{shot}_Ratio_vs_time.pdf',dpi=300)
  
-    fig,ax=plt.subplots(1, num = r'Ratio vs T_e ECE') # 
-    ax.scatter(te_ece, ratio, marker='o', s=1, label=r'$T_e$-ECE / $T_e$-HRTS vs $T_e$-ECE')
-    ax.axhline(y=1, c='r', ls='--', lw = 0.6)
-    ax.set_title(f'JPN {shot} - Ratio vs time') 
-    ax.set_xlabel(r'$T_e$-ECE (keV)')
-    ax.set_ylabel(r'$T_e$-ECE / $T_e$-TS')
-    ax.legend()
-    fig.tight_layout()
+    # fig,ax=plt.subplots(1, num = r'Ratio vs T_e ECE') # 
+    # ax.scatter(te_ece, ratio, marker='o', s=1, label=r'$T_e$-ECE / $T_e$-HRTS vs $T_e$-ECE')
+    # ax.axhline(y=1, c='r', ls='--', lw = 0.6)
+    # ax.set_title(f'JPN {shot} - Ratio vs time') 
+    # ax.set_xlabel(r'$T_e$-ECE (keV)')
+    # ax.set_ylabel(r'$T_e$-ECE / $T_e$-TS')
+    # ax.legend()
+    # fig.tight_layout()
     
-    if d['savefigs'] == 1: 
-        plt.savefig(d['mypath']+f'{shot}_Ratio_vs_Te.pdf',dpi=300)
+    # if d['savefigs'] == 1: 
+    #     plt.savefig(d['mypath']+f'{shot}_Ratio_vs_Te.pdf',dpi=300)
     ############################## 
     fig,ax=plt.subplots(1, num = 'Difference vs time') # 
     ax.plot(time,distance, lw=.8, label=r'$T_e$-ECE - $T_e$-HRTS')
