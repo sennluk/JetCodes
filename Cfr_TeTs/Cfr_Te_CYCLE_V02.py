@@ -25,7 +25,8 @@ shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526,
 DB = {} # Empty general database 
 
 saveDB = 1      # 0: don't save, 1: save the DB
-save_figures = 1  # 0: don't save, 1: save the figures
+save_plot = 1
+save_figures = 0  # 0: don't save, 1: save the figures
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
 
 fig,ax=plt.subplots(1, num = 'ECE vs HRTS')
@@ -69,13 +70,13 @@ for shot in shots:
     # mye.man_range(d,vars)
     print('### Def range ok !!!!! ###')
     
-    graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
-    graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
-    graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
-    graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
-    graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
-    graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-    graph.fig_rat_dist(d,vars)     # CONTROLLARE!!!
+    # graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
+    # graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
+    # graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
+    # graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
+    # graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
+    # graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
+    # graph.fig_rat_dist(d,vars)     # CONTROLLARE!!!
     
     ######################
     shot = d['shot']
@@ -89,8 +90,7 @@ for shot in shots:
     timeEce22 = vars['timeEce22']
     ranges = vars ['ranges']
     ###
-    
-             
+
     left = min(np.nanmin(temp_eceM_rho), np.nanmin(temp_tsM_rho))
     right  = max(np.nanmax(temp_eceM_rho), np.nanmax(temp_tsM_rho)) 
     def retta(x):
@@ -105,18 +105,20 @@ for shot in shots:
     ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='o', s=3, color = 'blue', facecolors='none', edgecolors='r', linewidth=.2, label='ECE vs TS')
     # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr = err_tsM_rho, yerr = err_eceM_rho, 
     #               marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5, label='ECE vs TS')
-    ax.set_title(f'JPN {shot} - Te Ece-Michelson vs Te HRTS  for {tlim1:.2f}<t<{tlim2:.2f} (s)') #:.2f per avere 2 cifre decimali
+    ax.set_title(f'Te Ece-Michelson vs Te HRTS  for {len(shots)} shots between JPN {shots[0]} and JPN {shots[-1]}') 
     ax.set_xlabel('Te HRTS (keV)')
     ax.set_ylabel('Te Ece-Michelson (keV)')
     ax.legend()
-    
-    
-    
+            
     ## Put data of the shot in the Database DB
     DB[shot] = {'par':d, 'var':vars} 
 
 ## Save the Dictionary in .json. If exist do not overwrite
 n = len(shots)
+
+if save_plot == 1:
+    with open("plot.pkl", "wb") as f:
+        pickle.dump(fig, f)
 
 if saveDB == 1:
     try:

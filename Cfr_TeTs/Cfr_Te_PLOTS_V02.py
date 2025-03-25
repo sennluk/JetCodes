@@ -235,7 +235,7 @@ def magax(d,vars):
     idt = (paperino >= tlim1) & (paperino <= tlim2)
     
     # cmap='YlGnBu', zored: regola la sovrapposizione
-    plt.figure('Mag ax pos vs time')
+    plt.figure(f'JPN {shot} Mag ax pos vs time')
     plt.plot(pippo[0,:],pluto[0,:],lw=0.7, color = 'blue', zorder=1)
     sc = plt.scatter(pippo[0,idt], pluto[0,idt], c=paperino[idt]-40, cmap='viridis', s=4, zorder=2) 
     plt.colorbar(sc, label="Time (s)")
@@ -250,7 +250,7 @@ def magax(d,vars):
     
     zTs_t = np.linspace(paperino[0], paperino[-1], zTs_v.shape[0])
     w = ppfs(shot)
-    plt.figure('Vert Mag ax pos vs time')
+    plt.figure(f'JPN {shot} Vert Mag ax pos vs time')
     w.efit.zmag.plot()
     plt.axvline(x = tlim1,c='r',ls='--',lw=.5, label='ti')
     plt.axvline(x = tlim2,c='r',ls='--',lw=.5, label = 'tf')
@@ -306,7 +306,7 @@ def rho_fig(d, vars):
     rho2 = ranges[indice,1] # che sarebbe rhoup
     
     tempo = round(tlim,3)        
-    fig08, ax08 = plt.subplots(nrows=1, sharex=True, num = 'Te vs RHO')
+    fig08, ax08 = plt.subplots(nrows=1, sharex=True, num = f'JPN {shot} Te vs RHO')
     ax08.scatter(rhoTs[:,idts], tempTs_s/1000, marker='o', lw = 0.7, facecolors='none', edgecolors='darkorange', label='HRTS')
     ax08.scatter(rhoEce[:,ide], tempEce_s/1000, marker='1', lw = 0.7, color = 'olive', label='ECE-KK1')
     ax08.axvline(x = rho1, c='r',ls='--',lw=.4)
@@ -333,7 +333,7 @@ def rho_fig(d, vars):
     rhoi = round(rho1,2)
     rhof = round(rho2,2)
 
-    fig03, (ax003, ax03) = plt.subplots(nrows=2, sharex=False, num = 'RHO profiles')
+    fig03, (ax003, ax03) = plt.subplots(nrows=2, sharex=False, num = f'JPN {shot} RHO profiles')
     ax003.plot(rTs, rhoTs_s, linewidth=0.5, color='green', label=r'HRTS LoS($\rho$)')
     ax003.plot(rEce, rhoEce_s, linewidth=0.5, color='blue', label=r'ECE LoS($\rho$)')
     ax003.axhline(y = rho1, c='r',ls='--',lw=.4)
@@ -388,7 +388,7 @@ def te_trends(d,vars):
     # PLOT cfr dati smootati CON ERRORBARS ece aritmetica vs ts pesata
     linew = 0.5
    
-    fig00,(ax00) = plt.subplots(nrows=1, sharex=True, num=f'{shot} - Time trends averaged')
+    fig00,(ax00) = plt.subplots(nrows=1, sharex=True, num=f'JPN {shot} - Time trends averaged')
     ax00.lw = linew
     ax00.errorbar(timeTs2, temp_tsM_rho, color = 'royalblue', lw = linew, yerr = err_tsM_rho, ecolor='c', elinewidth=.2, label='Tts')
     ax00.errorbar(timeTs2, temp_eceM_rho, color = 'tomato', lw = linew, yerr = err_eceM_rho, ecolor='r', elinewidth=.2, label='Tece')
@@ -401,7 +401,7 @@ def te_trends(d,vars):
     fig00.tight_layout()
     
     # Same plot with a smooothing algorithm
-    fig005, ax005 = plt.subplots(nrows=1, sharex=True, num=' Smooted - PSI- Time trend - Bands')
+    fig005, ax005 = plt.subplots(nrows=1, sharex=True, num= f'JPN {shot} Smooted - PSI- Time trend - Bands')
     linew = 0.7
     ax005.lw = 0.5
     
@@ -442,7 +442,7 @@ def fig_cfr_rho(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm,
     ranges = vars ['ranges']
     ####################
    
-    fig, ax = plt.subplots(3, num = 'Check plots ECE vs HRTS')
+    fig, ax = plt.subplots(3, num = f'JPN {shot} Check plots ECE vs HRTS')
     ax[0].plot(timeTs2,timeEce22, label='cfr tempi')
     ax[0].legend()
     ax[0].set_title(f'JPN {shot} - Check Plots')
@@ -464,7 +464,7 @@ def fig_cfr_rho(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm,
     x = np.linspace(left-0.5,right+0.5,timeTs2.shape[0])   # Range in keV di dove tracciare la retta
     y = retta(x)  
     
-    fig,ax=plt.subplots(1, num = 'ECE vs HRTS') # 
+    fig,ax=plt.subplots(1, num = f' JPN {shot} ECE vs HRTS') # 
     # ax.scatter(temp_eceM_rho, temp_tsM_rho,label='Rho Averaged ECE vs TS ') 
     ax.plot(x,y,'g--', lw=.8, label=r'$T_e$-ECE = $T_e$-HRTS')
     ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr = err_tsM_rho, yerr = err_eceM_rho, 
@@ -538,7 +538,7 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
     # if d['savefigs'] == 1: 
     #     plt.savefig(d['mypath']+f'{shot}_Ratio_vs_Te.pdf',dpi=300)
     ############################## 
-    fig,ax=plt.subplots(1, num = 'Difference vs time') # 
+    fig,ax=plt.subplots(1, num = f' JPN {shot} Difference vs time') # 
     ax.plot(time,distance, lw=.8, label=r'$T_e$-ECE - $T_e$-HRTS')
     ax.axhline(y=0, c='r', ls='--', lw = 0.6)
     ax.set_title(f'JPN {shot} - Difference vs time') 
@@ -550,7 +550,7 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
     if d['savefigs'] == 1: 
         plt.savefig(d['mypath']+f'{shot}_Diff_vs_time.pdf',dpi=300)
  
-    fig,ax=plt.subplots(1, num = 'Difference vs T_e ECE') # 
+    fig,ax=plt.subplots(1, num = f' JPN {shot} Difference vs T_e ECE') # 
     ax.scatter(te_ece, distance, marker='o', s=1, label=r'$T_e$-ECE - $T_e$-HRTS vs $T_e$-ECE')
     ax.axhline(y=0, c='r', ls='--', lw = 0.6)
     ax.set_title(f'JPN {shot} - Difference vs time') 
@@ -562,7 +562,7 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
     if d['savefigs'] == 1: 
         plt.savefig(d['mypath']+f'{shot}_Diff_vs_Te.pdf',dpi=300)
         
-    fig,ax=plt.subplots(1, num = 'Diff and err vs T_e ECE') # 
+    fig,ax=plt.subplots(1, num = f' JPN {shot} Diff and err vs T_e ECE') # 
     ax.errorbar(te_ece, distance, yerr=err_dist, 
                 marker='o', markersize=1, ecolor='g', linestyle='none', elinewidth=.5, label=r'Difference vs $T_e$-ECE') 
     #marker='o', s=1, )
@@ -577,7 +577,7 @@ def fig_rat_dist(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm
         plt.savefig(d['mypath']+f'{shot}_Diff_err_vs_Te.pdf',dpi=300)    
         
         
-    fig,ax=plt.subplots(1, num = 'Diff/T_ece and err vs T_e ECE') # 
+    fig,ax=plt.subplots(1, num = f' JPN {shot} Diff/T_ece and err vs T_e ECE') # 
     ax.errorbar(te_ece, distance/te_ece, yerr=err_dist_perc, 
                 marker='o', markersize=1, ecolor='g', linestyle='none', elinewidth=.5, label=r'Difference vs $T_e$-ECE') 
     #marker='o', s=1, )
