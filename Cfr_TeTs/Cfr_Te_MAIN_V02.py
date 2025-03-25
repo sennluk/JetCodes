@@ -37,12 +37,12 @@ import time
 plt.close('all')  
 # save = 0 # 1--> salva i grafici, 0 non li salva
 # Scelgo lo shot
-JPN = 104549 # 104522 #104990 # 104522 # 104525 #104990  #96994
+JPN = 104522 # 104549 # 104522 #104990 # 104522 # 104525 #104990  #96994
 # DTE3 shot list: 104990,991,994,995,999   
 # 104520,521,522,523,524,526
 
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
-save_figures = 1  # 0: don't save, 1: save the figures
+save_figures = 0  # 0: don't save, 1: save the figures
 d = {
     'shot' : JPN,        # 99950, 99971, 99970
     'Tref' : 2,          # (keV) Reference temperature: time instants with Te values above Tref are considered
@@ -80,13 +80,13 @@ mye.def_range_av(d,vars)
 # mye.man_range(d,vars)
 print('### Def range ok !!!!! ###')
 
-graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
-graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
-graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
-graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
-graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
+# graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
+# graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
+# graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
+# graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
+# graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
 graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-graph.fig_rat_dist(d,vars)     # CONTROLLARE!!!
+# graph.fig_rat_dist(d,vars)     # CONTROLLARE!!!
 
 
 

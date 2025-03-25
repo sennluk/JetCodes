@@ -133,7 +133,8 @@ def tdef(d,vars):
     # tmax = vars['tmax_v']/1000     # max Te max hrts (hrtx channel) in keV
     data = tmax_v[0,:]/1000
     # prendo come tlim l'istante in cui la Tmax è massima
-    valid_indices = np.where((tmax_t > 42) & (tmax_t <= 60))[0]
+    # valid_indices = np.where((tmax_t > 42) & (tmax_t <= 60))[0]
+    valid_indices = np.where(tmax_t <= 60)[0]
     tlim = tmax_t[np.nanargmax(tmax_v[0,valid_indices])] 
     ind_tlim = np.nanargmax(tmax_v[0,valid_indices])
     TMAX = data[ind_tlim]

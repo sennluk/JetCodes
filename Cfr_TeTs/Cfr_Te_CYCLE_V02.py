@@ -102,13 +102,13 @@ for shot in shots:
     # fig,ax=plt.subplots(1, num = 'ECE vs HRTS')
     # ax.scatter(temp_eceM_rho, temp_tsM_rho,label='Rho Averaged ECE vs TS ') 
     ax.plot(x,y,'g--', lw=.8)
-    ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='o', s=3, color = 'blue', facecolors='none', edgecolors='r', linewidth=.2, label='ECE vs TS')
+    ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='x', s=3, color = 'blue', facecolors='none', edgecolors='b', linewidth=.2, label='ECE vs TS')
     # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr = err_tsM_rho, yerr = err_eceM_rho, 
     #               marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5, label='ECE vs TS')
     ax.set_title(f'Te Ece-Michelson vs Te HRTS  for {len(shots)} shots between JPN {shots[0]} and JPN {shots[-1]}') 
     ax.set_xlabel('Te HRTS (keV)')
     ax.set_ylabel('Te Ece-Michelson (keV)')
-    ax.legend()
+    # ax.legend()
             
     ## Put data of the shot in the Database DB
     DB[shot] = {'par':d, 'var':vars} 
