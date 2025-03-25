@@ -15,9 +15,6 @@
   738  git clone https://github.com/sennluk/pippo.git
   739  ls
   740  cd pippo/
-  741  ls
-  742  cd ..
-  743  ls
   744  git init
   745  git add .
   746  cd Cfr_TeTs/
@@ -30,13 +27,6 @@
   753  git push -u origin main
   754  exit
   755  history | tail -n 80 > 2025_03_11_ultimi_80_comandi.txt
-  756  pwd
-  757  exit
-  758  module load py39
-  759  spyder
-  760  module load py39
-  761  spyder
-  762  pwd
   763  cd Python_LS/
   764  git status
   765  git add .
