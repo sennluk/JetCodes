@@ -1,20 +1,16 @@
-  720  cd Python_LS/
-  721  ls
-  722  git add Cfr_TeTs/
-  723  git clone https://github.com/sennluk/JetData.git
-  724  ls
-  725  git add ecm1_py
+  720  cd Python_LS/ 
+  723  git clone https://github.com/sennluk/JetData.git   % creo il clone della cartella su Git
+  725  git add ecm1_py     % Aggiungo una cartella
   726  cd JetData/
   727  git add ecm1_py
   728  git add ecm1_py/*
   729  ls
-  730  git add Note_Varie_Python.odt
-  731  git add commit -am 'prova ad aggiungere un file'
-  732  git commit -am 'prova ad aggiungere un file'
-  733  git push
+  730  git add Note_Varie_Python.odt                     % prova di aggiunta di un file al repository
+  731  git add commit -am 'prova ad aggiungere un file'  %  poi ne faccio il commit
+  732  git commit -am 'prova ad aggiungere un file'   
+  733  git push                                          %  ed infine il push sulla pagina web Git
   734  vim .git/config
   735  git push
-  736  cd ..
   737  git clone https://github.com/sennluk/PlasmaCodes.git
   738  git clone https://github.com/sennluk/pippo.git
   739  ls
@@ -85,16 +81,9 @@
   804  git commit -am'commit del new_plots n2'
   805  git commit -am'commit del new_plots n3'
   806  git push
-  807  exit
-  808  module load py39
-  809  spyder
-  810  exit
   811  cd Python_LS/
-  812  lls
-  813  ls
-  814  git checkoput
   815  git checkout
   816  history -n 50 >comandi_git_25_03.txt
   817  history -n 50 > comandi_git_25_03.txt
   818  history | tail -n 50 > comandi_git_25_03.txt
-  819  history | tail -n 100 > comandi_git_25_03_100.txt
+  819  history | tail -n 100 > comandi_git_25_03_100.txt    % salvo gli ultimo 100 comandi sul file di testo nominato come indicato
