@@ -138,8 +138,8 @@ def multiplot(d,vars):
     ax5.yaxis.set_tick_params(labelsize=fst)
     ax5.legend(fontsize = fonts, loc="upper left").set_draggable(True)
     
-    # posne = round(rad,2)
-    ax6.plot(tNe, ne, lw = linew, color='darkblue', label=f'Density at R={rad} m')
+    # posne = round(rad[0],2)
+    ax6.plot(tNe, ne, lw = linew, color='darkblue', label=f'Density at R={rad[0]:.2f} m')
     ax6.set_ylabel('$10^{19} m^{-3}$', fontsize= fs)
     ax6.yaxis.set_tick_params(labelsize=fst)
     ax6.legend(fontsize = fonts, loc="upper left").set_draggable(True)
@@ -158,7 +158,7 @@ def multiplot(d,vars):
 # Time trend at R=rad: cenrtro plasma =  minimo di RHO
 def tprof(d,vars):
     shot = d['shot']
-    delta = d['delta']
+    # delta = d['delta']
     tlim1 = vars['ti']-40 # -delta
     tlim2 = vars['tf']-40 # +delta
     tTs_v = vars['tTs_v']      # Chan Te HRTS  

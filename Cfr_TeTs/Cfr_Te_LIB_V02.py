@@ -37,7 +37,8 @@ def dictvar(d):
         'psiTs_r' : None,   # position for HRTS PSI values for the LoS at each time
         'zTs_v' : None,     # HRTS z Coords of the LoS
         'zTs_r' : None,     # HRTS R Coords of the LoS
-        'tmax' : None,      # HRTS max Te for each time
+        'tmax_v' : None,      # HRTS max Te for each time (Tmax channel)
+        'tmax_t' : None,      # HRTS max Te for each time (Tmax channel) - time
         'tEce_v' : None,    # ECE-KK1 Te for all the times and positions 
         'tEce_t' : None,    # ECE-KK1time instant values
         'tEce_r' : None,    # ECE-KK1 positions of the measurements in Major Radius coord 
@@ -51,7 +52,7 @@ def dictvar(d):
         'ti' : None,        # Initial time instant considered for the analisys
         'tf' : None,        # Final time instant considered for the analisys
         'tlim' : None,      # Time at which Tmax HRTS is max
-        'tmax' : None,      #  Max Te of the HRTS (Tmax channel)
+        'maxT_hrts' : None, #  Max Te of the Tmax (HRTS) channel over the whole shot
         'Ti' : None,        # Temp HRTS/max dell'istante iniziale
         'Tf' : None,        # Temp HRTS/max dell'istante finale
         'rad' : None,       # Position of the plasma center a
@@ -63,23 +64,11 @@ def dictvar(d):
         'psiKk1' : None,    # PSI coordinates on the ECE-KK1 data points
         'psiTscalc' : None, # HRTS PSI Computed to check the correctnes of the data Channel iused
         'rhoKk1' : None,    # ECE-KK1 LoS PSI coordinates 
-        # 'time_ts' : None,
-        # 'time_ece' : None,
         'rhoTs' : None,     #RHO coordinates on the HRTS data points
         'rhoEce' : None,    # RHO coordinates on the ECE-KK1 data points
-        # 'temp_tsM' : None,  
-        # 'err_tsM': None,
         'timeTs2' : None,     # TS time instants in the ti-tf window
         'timeEce22' : None,   # ECE time instants closest to the TS ones in the ti-tf window     '
         'ranges' : None,      # RHO ranges as calculated by the automatic procedure at each HRTS time- TS interpolated in t1<t<t2
-        # 'xm': None,  
-        # 'err_xm' : None, 
-        # 'temp_eceM' : None, 
-        # 'err_eceM' : None, 
-        # 'xm12': None, 
-        # 'err_xm12' : None, 
-        # 'temp_eceM12' : None, 
-        # 'err_eceM12' : None, 
         'temp_tsM_rho' : None,   # Te values averaged over the rho1-rho2 interval for HRTS
         'err_tsM_rho' : None,    # Error on HRTS Te values averaged over the rho1-rho2 interval
         'temp_eceM_rho' : None,  # Te values averaged over the rho1-rho2 interval for ECE
@@ -104,8 +93,9 @@ def dictvar(d):
     vars['psiTs_r'] = w.hrts.psi.r      # HRTS PSI values for the LoS at each time
     vars['zTs_v'] = w.hrts.z.v
     vars['zTs_r'] = w.hrts.z.r
-    vars['tmax'] = w.hrtx.tmax      # HRTS max temperature for each time
-    
+    vars['tmax_v'] = w.hrtx.tmax.v      # HRTS max temperature for each time - values
+    vars['tmax_t'] = w.hrtx.tmax.t      # HRTS max temperature for each time - time instants
+      
     vars['tEce_v'] = w.ecm1.prfl.v  # ECE-KK1 Te for all the times and positions 
     vars['tEce_t'] = w.ecm1.prfl.t  # ECE-KK1time instant values
     vars['tEce_r'] = w.ecm1.prfl.r  # ECE-KK1 positions of the measurements in Major Radius coord 
@@ -137,13 +127,15 @@ def tdef(d,vars):
     Tref = d['Tref']
     window_size = d['window_size']
     min_increase = d['min_increase']
+    tmax_v = vars['tmax_v']
+    tmax_t = vars ['tmax_t']
     #####################################
-    tmax = vars['tmax']/1000     # max Te max hrts (hrtx channel) in keV
-    data = tmax.v[0,:]
+    # tmax = vars['tmax_v']/1000     # max Te max hrts (hrtx channel) in keV
+    data = tmax_v[0,:]/1000
     # prendo come tlim l'istante in cui la Tmax è massima
-    valid_indices = np.where(tmax.t <= 60)[0]
-    tlim = tmax.t[np.nanargmax(tmax.v[0,valid_indices])] 
-    ind_tlim = np.nanargmax(tmax.v[0,valid_indices])
+    valid_indices = np.where((tmax_t > 42) & (tmax_t <= 60))[0]
+    tlim = tmax_t[np.nanargmax(tmax_v[0,valid_indices])] 
+    ind_tlim = np.nanargmax(tmax_v[0,valid_indices])
     TMAX = data[ind_tlim]
     
     def moving_average_np(data, window_size):
@@ -191,8 +183,8 @@ def tdef(d,vars):
     Ti = rising_value          # Temp istante inizale
     Tf = data[return_index]    # Temp istante finale
        
-    ti = tmax.t[rising_index]  # Istante iniziale
-    tf= tmax.t[return_index]   # Istante finale
+    ti = tmax_t[rising_index]  # Istante iniziale
+    tf= tmax_t[return_index]   # Istante finale
 
     tlim1 = vars['ti']
     tlim2 = vars['tf']
@@ -202,7 +194,7 @@ def tdef(d,vars):
     vars['Ti'] = Ti
     vars['Tf'] = Tf
     vars['tlim'] = tlim
-    vars['tmax'] = TMAX
+    vars['maxT_hrts'] = TMAX
     
     print('------------ Start new shot!!! ------------')
     print('JPN = ', d['shot'])

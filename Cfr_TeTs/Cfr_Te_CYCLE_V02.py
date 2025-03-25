@@ -41,7 +41,7 @@ for shot in shots:
         'np' : 1,            # Number of acquisition data points to add in computing the RHO ranges
         'fix' : 0.01,        # Delta to be safer in the RHO and PSI ranges determination
         'intPsi' : 0.1,      # PSI ramnge for the average  
-        'delta' : 0,         # Time (in sec) to be added to the ti-tf interval for multiplosts figure 
+        'delta' : 1,         # Time (in sec) to be added to the ti-tf interval for multiplosts figure 
         'rad' : 3.05,        # Major radius coordinate (in m) for the single position comparison 
         'psi1' : 0.003,      # Smallest PSI value for the PSI range
         'psi2' : 0.027,      # Highest PSI value for the PSI range

@@ -6,7 +6,7 @@ The Cfr_Te_Main_V00.py recall various function contained in Cfr_Te_LIB_V00.py
 to copute the comparison of the Electron temperatures measured by ECE and HRTS at JET.
 To avoid spikes and similar probles a time interval is uatomatically selected --> see the library
 To optimise the comparison the normalized toroidal flux coordinate (RHO) is used.
-To optimize the robustness of the comparinson, the range of the RHO values for the average
+To optimize the robustness of the comparison, the range of the RHO values for the average
 is computed at every instant, thus taking into account the movement of the plsama center on the poliodal plane
 with respet to the lines of sights of the diagnostics. (See libraries for details)
 Parameters are scvad in the 'd' dictionary
@@ -37,12 +37,12 @@ import time
 plt.close('all')  
 # save = 0 # 1--> salva i grafici, 0 non li salva
 # Scelgo lo shot
-JPN = 104522 # 104549 # 104522 #104990 # 104522 # 104525 #104990  #96994
+JPN = 104549 # 104522 #104990 # 104522 # 104525 #104990  #96994
 # DTE3 shot list: 104990,991,994,995,999   
 # 104520,521,522,523,524,526
 
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
-
+save_figures = 1  # 0: don't save, 1: save the figures
 d = {
     'shot' : JPN,        # 99950, 99971, 99970
     'Tref' : 2,          # (keV) Reference temperature: time instants with Te values above Tref are considered
@@ -59,7 +59,7 @@ d = {
     'eP' : 0.035,         # Relative error assigned to the Ece data
     'win_len' : 15,      # Window lenght: number of points for the smooth with Savitsky-golay filter
     'deg_pol' : 3,       # Poly degree used for the smoothing 
-    'savefigs' : 0,      # 1--> save plots, 0 don't save.
+    'savefigs' : save_figures,      # 1--> save plots, 0 don't save.
     'mypath' : f'/home/lsenni/Python_LS/Cfr_TeTs/{timestr}_JPN_{JPN}_Plots/'  # folder to save plots
     }    
 
