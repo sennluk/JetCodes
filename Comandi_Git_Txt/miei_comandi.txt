@@ -1,0 +1,717 @@
+    1  cat /home/egio/.profile~
+    2  cat /home/egio/.profile
+    3  cd Python_LS/modules_files/
+    4  pwd
+    5  exit
+    6  ipython
+    7  close
+    8  logout
+    9  exit
+   10  ipython
+   11  python3
+   12  module load py39
+   13  python3
+   14  exit
+   15  module load py39
+   16  spyder
+   17  exit
+   18  module load py39
+   19  spyder
+   20  xkill
+   21  matlab
+   22  exit
+   23  module load py39
+   24  spyder
+   25  exit
+   26  module load py39
+   27  spyder
+   28  module load py39
+   29  spyder
+   30  exit
+   31  module load py39
+   32  spyder
+   33  module load py39
+   34  spyder
+   35  spyder
+   36  spyder
+   37  module load py39
+   38  spyder
+   39  module load py39
+   40  spyder
+   41  module load py39
+   42  module load py39
+   43  cd ..
+   44  cd egio/
+   45  cd colleghi/senni/
+   46  python eqdsk_dump.py 103099 44.0 44.5
+   47  python eqdsk_dump.py 103098 44.0 44.5
+   48  ls
+   49  python
+   50  ipython
+   51  python tkeqdsk.py
+   52  python eqdsk_dump.py 103098 44.0 44.5
+   53  pwd
+   54  python eqdsk_dump.py 103098 44.0 44.5
+   55  module load py39
+   56  cd /home/egio/colleghi/senni/
+   57  python eqdsk_dump.py 103098 44.0 44.5
+   58  python tkeqdsk.py
+   59  cd ~
+   60  pwd
+   61  python /home/egio/colleghi/senni/eqdsk_dump.py 103099 44.0 44.5
+   62  python /home/egio/colleghi/senni/eqdsk_dump.py 103098 44.0 44.5
+   63  python /home/egio/colleghi/senni/tkeqdsk.py 
+   64  pwd
+   65  python /home/egio/colleghi/senni/eqdsk_dump.py 103099 44.0 44.5
+   66  export PS1="\u@\h\w"
+   67  cd Python_LS/
+   68  export PS1="\u@\h\w>"
+   69  cd 
+   70  cd -
+   71  ls
+   72  cd Ex_Da_Egio/
+   73  export PS1="\u@\[\e[31m\]\h\[\e[\m]"
+   74  export PS1="\u@\[\e[31m\]\h\[\e[m\]"
+   75  ls
+   76  pwd
+   77  cd ..
+   78  cd egio/
+   79  cd colleghi/
+   80  ls
+   81  cd senni/
+   82  ls
+   83  cp eqdsk.py ~
+   84  cp eqdsk.py ~/Python_LS/
+   85  pwd
+   86  python eqdsk_dump.py 103099 44.0 44.5
+   87  pwd
+   88  cd ..
+   89  cd ..
+   90  cd pwd
+   91  pwd
+   92  cd ..
+   93  cd lsenni/
+   94  cd Python_LS/
+   95  pwd
+   96  ls ./
+   97  pwd
+   98  export PS!="\u@\h\w"
+   99  export PS1="\u@\h\w"
+  100  export PS!="\u@\h\w>"
+  101  export PS1="\u@\h\w>"
+  102  source ~/.bashrc
+  103  export PS1="\u@\h\w>"
+  104  source ~/.bashrc
+  105  export PS1="\u@\h\w>"
+  106  geany ~/.bashrc
+  107  source ~/.bashrc
+  108  module load py39
+  109  spyder
+  110  export PS1="\[\033[01;032m\]\u@\h\[\033[00m\]:[\033[01;034m\]\w\[\033[00m\]>"
+  111  export PS1="\[\033[01;032m\]\u@\h\[\033[00m\]:\[\033[01;034m\]\w\[\033[00m\]>"
+  112  cd Ex_Da_Egio/
+  113  ls
+  114  geany ~/.bashrc
+  115  export PS1="\[\033[01;032\]]\u@\h:\w>"
+  116  geany ~/.bashrc
+  117  export PS1="\[\033[01;032m\]\u@\h\[\033[00m\]:\[\033[01;034m\]\w\[\033[00m\]>"
+  118  ls
+  119  cd ..
+  120  ls
+  121  cd ..
+  122  module load py39
+  123  python /home/egio/colleghi/senni/eqdsk_dump.py 103099 44.0 44.5
+  124  python /home/egio/colleghi/senni/tkeqdsk.py 
+  125  python /home/egio/colleghi/senni/eqdsk.py 
+  126  cd /home/egio/colleghi/senni/
+  127  python eqdsk_dump.py 103099 44.0 44.5
+  128  python tkeqdsk.py 
+  129  python eqdsk.py 
+  130  geany eqdsk.py 
+  131  module load py39
+  132  python /home/egio/colleghi/senni/eqdsk_dump.py 103099 44.0 44.5
+  133  python /home/egio/colleghi/senni/tkeqdsk.py 
+  134  module load py39
+  135  cd Python_LS/
+  136  ls
+  137  cd Ex_Da_Egio/
+  138  ls
+  139  cd EQDSK_Python_Egio/
+  140  ls
+  141  python eqdsk_dump.py 103099 44.0 44.5
+  142  spyder
+  143  module load py39
+  144  spyder
+  145  module load py39
+  146  spyder
+  147  spyder --new
+  148  cd Desktop/
+  149  ls
+  150  cd ..
+  151  ls
+  152  cd ..
+  153  ls
+  154  cd lsenni/
+  155  ls
+  156  cd Python_LS/
+  157  ls
+  158  cd Jet_Data_ASCOT/
+  159  ls
+  160  spyder
+  161  spyder --new
+  162  module load py39
+  163  spyder
+  164  ls --color
+  165  geany ~/.bashrcc
+  166  ls
+  167  geany ~/.bashrcc
+  168  ls
+  169  ls
+  170  module load py39
+  171  spyder
+  172  module load py39
+  173  python eqdsk_dump.py 103099 44.0 44.5
+  174  cd Python_LS/
+  175  ls
+  176  cd Ex_Da_Egio/
+  177  ls
+  178  python eqdsk_dump.py 103099 44.0 44.5
+  179  python eqdsk_dump.py 104522 44.0 44.5
+  180  cd ..
+  181  cd ..
+  182  ls
+  183  spyder
+  184  module py39
+  185  module load py39
+  186  spyder
+  187  spyder
+  188  cd /home/egio/colleghi/senni/
+  189  ls
+  190  python tkeqdsk.py 
+  191  module load py39
+  192  python tkeqdsk.py 
+  193  module load py39
+  194  cd Python_LS/
+  195  ls
+  196  cd Jet_Data_ASCOT/
+  197  ls
+  198  cd ..
+  199  cd Ex_Da_Egio/
+  200  ls
+  201  cd EQDSK_Python_Egio/
+  202  ls
+  203  python eqdsk_dump.py 104520 48.0
+  204  python tkeqdsk.py
+  205  python tkeqdsk.py 
+  206  module load py39
+  207  ls
+  208  python tkeqdsk.py 
+  209  module load py39
+  210  module load py39
+  211  module load py39
+  212  python tkeqdsk.py 
+  213  cd ..
+  214  cd ..
+  215  cd ..
+  216  ls
+  217  module load py39
+  218  python tkeqdsk.py 
+  219  module load py39
+  220  module load py39
+  221  cd Python_LS/Ex_Da_Egio/EQDSK_Python_Egio
+  222  python tkeqdsk.py 
+  223  module load py39
+  224  d /home/egio/colleghi/senni/
+  225  python tkeqdsk.py 
+  226  cd /home/egio/colleghi/senni/
+  227  python tkeqdsk.py 
+  228  module load py39
+  229  cd Python_LS/Ex_Da_Egio/EQDSK_Python_Egio/
+  230  spyder
+  231  spyder
+  232  module load py39
+  233  spyder
+  234  spyder --newistance
+  235  spyder --new-istance
+  236  spyder --new-instance
+  237  module load py39
+  238  spyder
+  239  module load py39
+  240  spyder
+  241  module load py39
+  242  spyder
+  243  matlab
+  244  module load py39
+  245  spyder
+  246  module load py39
+  247  spyder
+  248  xkill
+  249  xkill
+  250  xkill
+  251  module load py39
+  252  spyder
+  253  module swap flush/versionnumber
+  254  module swap flush/
+  255  module flush
+  256  module load flush
+  257  spyder
+  258  /home/egio/python/eg-python-tools/
+  259  cd /home/egio/python/eg-python-tools/
+  260  ls
+  261  cd /usr/local/modules/
+  262  ls
+  263  cd default/
+  264  ls
+  265  cd python/
+  266  ls
+  267  cd ..
+  268  ls
+  269  cd anaconda3/
+  270  ls
+  271  cd ..
+  272  ls
+  273  module load py39
+  274  spyder
+  275  module load py39
+  276  spyder
+  277  module load py39
+  278  spyder
+  279  module load py39
+  280  spyder
+  281  spyder
+  282  module load py39
+  283  spyder
+  284  module load py39
+  285  spyder
+  286  module load py39
+  287  spyder
+  288  module load py39
+  289  spyder
+  290  module load py39
+  291  spyder
+  292  module load py39
+  293  spyder
+  294  module load py39
+  295  spyder
+  296  module load py39
+  297  spyder
+  298  module load py39
+  299  spyder
+  300  module load py39
+  301  spyder
+  302  module load py39
+  303  spyder
+  304  module load py39
+  305  spyder
+  306  module load py39
+  307  spyder
+  308  module load py39
+  309  spyder
+  310  module load py39
+  311  spyder
+  312  module load py39
+  313  spyder
+  314  module load py39
+  315  spyder
+  316  who
+  317  ssh 212.219.92.26
+  318  ip addr show
+  319  module load py39
+  320  spyder
+  321  module load py39
+  322  spyder
+  323  spyder
+  324  spyder
+  325  module load py39
+  326  spyder
+  327  module load py39
+  328  spyder
+  329  xkill
+  330  module load py39
+  331  spyder
+  332  module load py39
+  333  spyder
+  334  module load py39
+  335  spyder
+  336  module load py39
+  337  spyder
+  338  module load py39
+  339  spyder
+  340  module load py39
+  341  spyder
+  342  module load py39
+  343  spyder
+  344  module load py39
+  345  spyder
+  346  module load py39
+  347  spyder
+  348  module load py39
+  349  spyder
+  350  module load py39
+  351  spyder
+  352  module load py39
+  353  spyder
+  354  spyder
+  355  spyder
+  356  module load py39
+  357  spyder
+  358  module load py39
+  359  spyder
+  360  module load py39
+  361  spyder
+  362  spyder
+  363  module load py39
+  364  spyder
+  365  module load py39
+  366  spyder
+  367  module load py39
+  368  spyder
+  369  module load py39
+  370  spyder
+  371  module load py39
+  372  spyder
+  373  module load py39
+  374  spyder
+  375  module load py39
+  376  spyder
+  377  module load py39
+  378  spyder
+  379  module load py39
+  380  spyder
+  381  module load py39
+  382  spyder
+  383  module load py39
+  384  spyder
+  385  module load py39
+  386  spyder
+  387  spyder
+  388  ls
+  389  cd Python_LS/
+  390  ls
+  391  cd Cfr_TeTs/
+  392  ls
+  393  pwd
+  394  cd Python_LS/Cfr_TeTs/
+  395  ls
+  396  cd 2024_04_04_DTE3/
+  397  cd ..
+  398  module load py39
+  399  spyder
+  400  module load py39
+  401  spyder
+  402  module load py39
+  403  spyder
+  404  ls
+  405  cd Python_LS/
+  406  module load py39
+  407  spyder
+  408  module load py39
+  409  spyder
+  410  spyder
+  411  module load py39
+  412  spyder
+  413  module load flush
+  414  module load py39
+  415  spyder
+  416  spyder
+  417  module load py39
+  418  ls
+  419  cd Python_LS/Cfr_TeTs/
+  420  python ./Cfr_Te_Fun_V07.py > output_mio.txt
+  421  module load py39
+  422  cd Python_LS/Cfr_TeTs/
+  423  python3.9 Cfr_Te_Fun_V07.py | tee pippo.log
+  424  cat pippo.log 
+  425  tee
+  426  man tee
+  427  ls -l | tee aaaaa.out
+  428  vim aaaaa.out 
+  429  rm aaaaa.out 
+  430  module load py39
+  431  spyder
+  432  module load py39
+  433  spyder
+  434  module load py39
+  435  spyder
+  436  module load py39
+  437  spyder
+  438  spyder
+  439  ls
+  440  cd Python_LS/Cfr_TeTs/
+  441  ls
+  442  zip -r 2024_04_23_Elab/
+  443  zip -r 2024_04_23_Elab/ ./
+  444  ls
+  445  zip -r pippo.zip 2024_04_23_Elab/ 
+  446  ls
+  447  module load py39
+  448  spyder
+  449  ls
+  450  pwd
+  451  cd Desktop/
+  452  zip -r pippo.zip Prove_immagini_Varie/ 
+  453  module load py39
+  454  spyder
+  455  cd..
+  456  cd ..
+  457  ls
+  458  pwd
+  459  cd ..
+  460  pwd
+  461  cd ..
+  462  ls
+  463  cd home/egio/
+  464  find egio/ -name "*.py" -exec grep rhostar {}\; -print
+  465  find egio/ -name "*.py" -exec grep rhostar {}\; -print
+  466  find egio/ -name "*.py" -exec grep rhostar{}\; -print
+  467  cd Python_LS/
+  468  ls
+  469  cd RT22_08_High_Beta/
+  470  ls
+  471  pwd
+  472  module load py39
+  473  spyder
+  474  module load py39
+  475  spyder
+  476  module load py39
+  477  spyder
+  478  ls
+  479  cd Desktop/
+  480  ls
+  481  zip -r plotsBeta.zip Plots_Figs/ 
+  482  module load py39
+  483  spyder
+  484  module load py39
+  485  spyder
+  486  module load py39
+  487  spyder
+  488  module load py39
+  489  spyder
+  490  module load py39
+  491  spyder
+  492  ls
+  493  cd Des
+  494  cd Desktop/
+  495  zip -r plotsBeta.zip 2024_07_12_plots/ 
+  496  module load py39
+  497  spyder
+  498  module load py39
+  499  spyder
+  500  module load py39
+  501  spyder
+  502  module load py39
+  503  spyder
+  504  logout
+  505  exit
+  506  module load py39
+  507  spyder
+  508  exit
+  509  module load py39
+  510  spyder
+  511  exit
+  512  cd ..
+  513  cd mfontana/
+  514  ls
+  515  cd mycodes/
+  516  ls
+  517  cd DB_ECE_LIDAR/
+  518  ls
+  519  cd ..
+  520  cd ./
+  521  cd ..
+  522  cd lsenni/
+  523  ls
+  524  module load py39
+  525  spyder
+  526  exit
+  527  cd ..
+  528  cd  mfontana/
+  529  cd  python-novice-inflammation/
+  530  ls
+  531  cd ..
+  532  ls
+  533  cd mycodes/
+  534  ls
+  535  cd ..
+  536  ls
+  537  lscd ccfepc/
+  538  ls
+  539  cd spece
+  540  ls
+  541  cd ..
+  542  ls
+  543  ipython --pylab
+  544  module load py39
+  545  ipython --pylab
+  546  module load py39
+  547  ipython --pylab
+  548  exit
+  549  logout
+  550  exit
+  551  module load py39
+  552  ipython --pylab
+  553  exit
+  554  module load py39
+  555  spyder
+  556  exit
+  557  ls
+  558  pwd
+  559  cd Python_LS/Cfr_TeTs/
+  560  ls
+  561  zip -r plotsPoster.zip 2024_10_02_Per_Poster/ 
+  562  zip -r plotsPoster2.zip 20241002-152406_JPN_104522_Plots/ 
+  563  zip -r plotsPoster3.zip 2024_10_02_Elab_Poster_3_shots/ 
+  564  exit
+  565  module load py39
+  566  spyder
+  567  exit
+  568  module load py39
+  569  spyder
+  570  exit
+  571  module load py39
+  572  spyder
+  573  exit
+  574  module load py39
+  575  spyder
+  576  module load py39
+  577  spyder
+  578  ipython --pylab
+  579  module load py39
+  580  spyder
+  581  module load py39
+  582  spyder
+  583  module load py39
+  584  spyder
+  585  ls
+  586  cd Python_LS/
+  587  ls
+  588  zip -r progsPY.zip Cfr_TeTs/ 
+  589  cd .. 
+  590  ls
+  591  de Desktop/
+  592  cd Desktop/
+  593  ls
+  594  zip -r PY_Codes.zip Progs_PY/
+  595  zip -r Altre_Figure.zip Altre_Figs/
+  596  module load py39
+  597  spyder
+  598  module load py39
+  599  spyder
+  600  cd ..
+  601  cd Des
+  602  ls
+  603  cd lsenni/
+  604  cd Desktop/
+  605  zip -r Plots_2025_2.zip Plots_2025_2/
+  606  module load py39
+  607  spyder
+  608  ls
+  609  cd Desktop/
+  610  ls
+  611  zip -r Plots_2025.zip plots_2025
+  612  zip -r Plots_2025.zip Plots_2025
+  613  zip -r 2025_DTE3_V00.zip 2025_DTE3_V00
+  614  cd Desktop/
+  615  zip -r 2025_DTE3_V00.zip 2025_DTE3_V00
+  616  logout
+  617  exit
+  618  module load py39
+  619  spyder
+  620  exit
+  621  module load py39
+  622  spyder
+  623  module load py39
+  624  spyder
+  625  module load py39
+  626  spyder
+  627  module load py39
+  628  spyder
+  629  module load py39
+  630  spyder
+  631  module load py39
+  632  spyder
+  633  module load py39
+  634  spyder
+  635  module load py39
+  636  spyder
+  637  module load py39
+  638  spyder
+  639  module load py39
+  640  spyder
+  641  module load py39
+  642  spyder
+  643  zip -r 2025_02_03_Crf.zip 2025_02_03_Cfr_
+  644  ls
+  645  cd Desktop/
+  646  zip -r 2025_02_03_Crf.zip 2025_02_03_Cfr_
+  647  module load py39
+  648  spyder
+  649  module load py39
+  650  spyder
+  651  module load py39
+  652  spyder
+  653  pwd
+  654  ip show
+  655  ip 
+  656  ip addr show
+  657  l
+  658  ls
+  659  scp Acq_Fontana.py enrico@150.146.18.28:
+  660  ifconfig 
+  661  scp Acq_Fontana.py luca@150.146.18.28:
+  662  ls
+  663  cd Python_LS/Cfr_TeTs/
+  664  ls
+  665  scp DB_24_Shots_V01.pkl luca@150.146.18.28:
+  666  module load py39
+  667  spyder
+  668  module load py39
+  669  spyder
+  670  module load py39
+  671  spyder
+  672  module load py39
+  673  spyder
+  674  module load py39
+  675  spyder
+  676  module load py39
+  677  spyder
+  678  module load py39
+  679  spyder
+  680  module load py39
+  681  spyder
+  682  module load py39
+  683  spyder
+  684  exit
+  685  ls
+  686  cd Des
+  687  cd Desktop/
+  688  zip -r 2025_02_26_x_Art.zip 2025_02_26_Fig_X_Art/
+  689  exit
+  690  module load py39
+  691  spyder
+  692  module load py39
+  693  spyder
+  694  exit
+  695  module load py39
+  696  spyder
+  697  exit
+  698  module load py39
+  699  spyder
+  700  exit
+  701  ls -al ~/.ssh
+  702  id_ecdsa.pub
+  703  id_rsa.pub
+  704  ls
+  705  ssh-keygen -t ed25519 -C "luca.senni@gmail.com"
+  706  cat ~/.ssh/id_ed25519.pub
+  707  ls
+  708  cd Desktop/
+  709  cat ~/.bash_history
+  710  cd ..
+  711  cat ~/.bash_history
+  712  cd Desktop/
+  713  cd ..
+  714  cd Desktop/
+  715  history | tail -n 20
+  716  history | tail -n 20 >ultimi_comandi.txt
+  717  history > miei_comandi.txt

@@ -1,0 +1,61 @@
+  676  module load py39
+  677  spyder
+  678  
+  684  exit
+  687  cd Desktop/
+  688  zip -r 2025_02_26_x_Art.zip 2025_02_26_Fig_X_Art/
+  701  ls -al ~/.ssh
+  702  id_ecdsa.pub
+  703  id_rsa.pub
+  704  ls
+  705  ssh-keygen -t ed25519 -C "luca.senni@gmail.com"
+  706  cat ~/.ssh/id_ed25519.pub
+  707  ls
+  708  cd Desktop/
+  709  cat ~/.bash_history
+  710  cd ..
+  711  cat ~/.bash_history
+  712  cd Desktop/
+  713  cd ..
+  714  cd Desktop/
+  715  history | tail -n 20
+  716  history | tail -n 20 >ultimi_comandi.txt
+  717  history > miei_comandi.txt
+  718  cd ..
+  719  ls
+  720  cd Python_LS/
+  721  ls
+  722  git add Cfr_TeTs/
+  723  git clone https://github.com/sennluk/JetData.git
+  724  ls
+  725  git add ecm1_py
+  726  cd JetData/
+  727  git add ecm1_py
+  728  git add ecm1_py/*
+  729  ls
+  730  git add Note_Varie_Python.odt
+  731  git add commit -am 'prova ad aggiungere un file'
+  732  git commit -am 'prova ad aggiungere un file'
+  733  git push
+  734  vim .git/config
+  735  git push
+  736  cd ..
+  737  git clone https://github.com/sennluk/PlasmaCodes.git
+  738  git clone https://github.com/sennluk/pippo.git
+  739  ls
+  740  cd pippo/
+  741  ls
+  742  cd ..
+  743  ls
+  744  git init
+  745  git add .
+  746  cd Cfr_TeTs/
+  747  git add .
+  748  git committ -m 'first commit Cfr'
+  749  git commit -m 'first commit Cfr'
+  750  git remote add origin git@github.com:sennluk/JetCodes.git
+  751  git branch -M main
+  752  git push -u oriigin main
+  753  git push -u origin main
+  754  exit
+  755  history | tail -n 80 > 2025_03_11_ultimi_80_comandi.txt

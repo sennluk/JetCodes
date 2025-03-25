@@ -1,0 +1,100 @@
+  720  cd Python_LS/
+  721  ls
+  722  git add Cfr_TeTs/
+  723  git clone https://github.com/sennluk/JetData.git
+  724  ls
+  725  git add ecm1_py
+  726  cd JetData/
+  727  git add ecm1_py
+  728  git add ecm1_py/*
+  729  ls
+  730  git add Note_Varie_Python.odt
+  731  git add commit -am 'prova ad aggiungere un file'
+  732  git commit -am 'prova ad aggiungere un file'
+  733  git push
+  734  vim .git/config
+  735  git push
+  736  cd ..
+  737  git clone https://github.com/sennluk/PlasmaCodes.git
+  738  git clone https://github.com/sennluk/pippo.git
+  739  ls
+  740  cd pippo/
+  741  ls
+  742  cd ..
+  743  ls
+  744  git init
+  745  git add .
+  746  cd Cfr_TeTs/
+  747  git add .
+  748  git committ -m 'first commit Cfr'
+  749  git commit -m 'first commit Cfr'
+  750  git remote add origin git@github.com:sennluk/JetCodes.git
+  751  git branch -M main
+  752  git push -u oriigin main
+  753  git push -u origin main
+  754  exit
+  755  history | tail -n 80 > 2025_03_11_ultimi_80_comandi.txt
+  756  pwd
+  757  exit
+  758  module load py39
+  759  spyder
+  760  module load py39
+  761  spyder
+  762  pwd
+  763  cd Python_LS/
+  764  git status
+  765  git add .
+  766  git commit -am 'secondo commit della cartella cfr'
+  767  git push
+  768  module load py39
+  769  spyder
+  770  exit
+  771  module load py39
+  772  spyder
+  773  cd Python_LS/Cfr_TeTs/
+  774  ls
+  775  zip -r 20250324-162332_JPN_104522_Plots/ 104522_plots.zip
+  776  zip -r 104522_plots.zip 20250324-162332_JPN_104522_Plots
+  777  ls
+  778  cd Python_LS/Cfr_TeTs/
+  779  git checkout
+  780  cd ..
+  781  vim .gitignore
+  782  git checkout
+  783  git branch new_plots
+  784  git checkout new_plots
+  785  git checkout main
+  786  git checkout new_plots
+  787  git branch
+  788  git commit -am'pippo prova brach'
+  789  git checkout main 
+  790  git push
+  791  git commit -am'commit del main'
+  792  git checkout new_plots
+  793  git commit -am'commit del new_plots'
+  794  git branch
+  795  git checkout main 
+  796  git checkout new_plots
+  797  git branch
+  798  git checkout
+  799  git commit -am'commit del new_plots'
+  800  git push
+  801  git push --set-upstream origin new_plots
+  802  git push
+  803  git checkout
+  804  git commit -am'commit del new_plots n2'
+  805  git commit -am'commit del new_plots n3'
+  806  git push
+  807  exit
+  808  module load py39
+  809  spyder
+  810  exit
+  811  cd Python_LS/
+  812  lls
+  813  ls
+  814  git checkoput
+  815  git checkout
+  816  history -n 50 >comandi_git_25_03.txt
+  817  history -n 50 > comandi_git_25_03.txt
+  818  history | tail -n 50 > comandi_git_25_03.txt
+  819  history | tail -n 100 > comandi_git_25_03_100.txt
