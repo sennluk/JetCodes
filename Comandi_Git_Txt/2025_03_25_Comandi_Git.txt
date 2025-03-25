@@ -32,11 +32,6 @@
   765  git add .
   766  git commit -am 'secondo commit della cartella cfr'
   767  git push
-  768  module load py39
-  769  spyder
-  770  exit
-  771  module load py39
-  772  spyder
   773  cd Python_LS/Cfr_TeTs/
   774  ls
   775  zip -r 20250324-162332_JPN_104522_Plots/ 104522_plots.zip
@@ -58,22 +53,13 @@
   791  git commit -am'commit del main'
   792  git checkout new_plots
   793  git commit -am'commit del new_plots'
-  794  git branch
   795  git checkout main          % Per cambiare branch e andare nel 'main'
   796  git checkout new_plots     % Per cambiare branch e andare nel 'new_plots'
   797  git branch                 % Per vedere tutti i branch esistenti  
   798  git checkout
   799  git commit -am'commit del new_plots'
-  800  git push
   801  git push --set-upstream origin new_plots
-  802  git push
   803  git checkout
   804  git commit -am'commit del new_plots n2'
   805  git commit -am'commit del new_plots n3'
-  806  git push
-  811  cd Python_LS/
-  815  git checkout
-  816  history -n 50 >comandi_git_25_03.txt
-  817  history -n 50 > comandi_git_25_03.txt
-  818  history | tail -n 50 > comandi_git_25_03.txt
   819  history | tail -n 100 > comandi_git_25_03_100.txt    % salvo gli ultimo 100 comandi sul file di testo nominato come indicato
