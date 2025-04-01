@@ -26,6 +26,8 @@ import my_manage_file as mym
 # Definisco il dizionario delle variabili
 
 def dictvar(d):
+    print('------------ Start new shot!!! ------------')
+    print('JPN = ', d['shot'])
  
     vars = {
         'tTs_v' : None,     # HRTS Te for all the times and positions 
@@ -116,7 +118,8 @@ def dictvar(d):
         # mym.save_print_output_to_file(d,vars)
     else:
         print('You are not saving the plots')
-    
+        
+    print(f'--- Dict vars JPN {shot} created! ---')
     return vars
 
 ##################################################
@@ -129,14 +132,34 @@ def tdef(d,vars):
     min_increase = d['min_increase']
     tmax_v = vars['tmax_v']
     tmax_t = vars ['tmax_t']
+    tlim1 = vars['ti']
+    tlim2 = vars['tf']
+    #####
+    print('t lim1 = ', tlim1, ' None = Automatically computed')
+    print('t lim2 = ', tlim2, ' None = Automatically computed')
     #####################################
     # tmax = vars['tmax_v']/1000     # max Te max hrts (hrtx channel) in keV
     data = tmax_v[0,:]/1000
     # prendo come tlim l'istante in cui la Tmax è massima
     # valid_indices = np.where((tmax_t > 42) & (tmax_t <= 60))[0]
+    
+    # Spikes removal
+    sogliola = 2 # Threshold (keV)
+    def remove_spikes(signal, threshold):
+        signal_filtered = signal.copy()
+        for i in range(1, len(signal) - 1):  # Escludiamo il primo e l'ultimo punto
+            if (signal[i] > signal[i-1] * threshold) and (signal[i] > signal[i+1] * threshold):
+                signal_filtered[i] = (signal[i-1] + signal[i+1]) / 2  # Media dei vicini
+        return signal_filtered
+    
+    # Applichiamo il filtro
+    filtered_signal = remove_spikes(data, sogliola)
+    
     valid_indices = np.where(tmax_t <= 60)[0]
-    tlim = tmax_t[np.nanargmax(tmax_v[0,valid_indices])] 
-    ind_tlim = np.nanargmax(tmax_v[0,valid_indices])
+    # tlim = tmax_t[np.nanargmax(tmax_v[0,valid_indices])] 
+    tlim = tmax_t[np.nanargmax(filtered_signal[valid_indices])] 
+    # ind_tlim = np.nanargmax(tmax_v[0,valid_indices])
+    ind_tlim = np.nanargmax(filtered_signal[valid_indices])
     TMAX = data[ind_tlim]
     
     def moving_average_np(data, window_size):
@@ -170,15 +193,15 @@ def tdef(d,vars):
     
     if rising_index is not None:
         rising_value = data[rising_index]
-        print(f"I dati iniziano a salire all'indice {rising_index}, valore: {rising_value}")
+        print(f"Data start rising at index= {rising_index} - Initial Temp.: {rising_value:.2f} keV")
         
         # Trova il punto di ritorno
         return_index = find_return_point_np(data, ind_tlim, rising_value-0.2)
         Tfin = data[return_index]
         if return_index is not None:
-            print(f"L'indice finale è: {return_index}, corrispondente ad una valore: {Tfin}")
+            print(f"Final index= {return_index} - Final Temp.: {Tfin:.2f} keV")
         else:
-            print(f"I dati non tornano più al valore {rising_value}.")
+            print(f"Data no longer return to value {rising_value:.2f} keV")
 
     #####################
     Ti = rising_value          # Temp istante inizale
@@ -186,9 +209,6 @@ def tdef(d,vars):
        
     ti = tmax_t[rising_index]  # Istante iniziale
     tf= tmax_t[return_index]   # Istante finale
-
-    tlim1 = vars['ti']
-    tlim2 = vars['tf']
     
     vars['ti'] = ti
     vars['tf'] = tf
@@ -197,14 +217,10 @@ def tdef(d,vars):
     vars['tlim'] = tlim
     vars['maxT_hrts'] = TMAX
     
-    print('------------ Start new shot!!! ------------')
-    print('JPN = ', d['shot'])
-    print("Automated tlim1 =", ti)
-    print("Automated tlim2 =", tf)
-    print('t lim1 = ', tlim1, ' None = Automatically computed')
-    print('t lim2 = ', tlim2, ' None = Automatically computed')
-    print('Instant of the max Tmax=', tlim)
-    
+    print("Automated tlim1 =", ti, 'sec')
+    print("Automated tlim2 =", tf, 'sec')
+    print('Instant of the max Tmax =', tlim, 'sec')
+    print('--- time range calc ok! ---')
     return 1
 ##################################################
 # Compute PSI on ECE LoS coords (HRTS has his channel available) 
@@ -226,7 +242,7 @@ def psicalc(d, vars):
         psiKk1[:,i] = psi
    
     vars['psiKk1'] = psiKk1      
-    
+    print('--- PSI calc ok ---')
     return 1
 ##################################################
 # Compute RHO on ECE and HRTS LoSs
@@ -275,7 +291,7 @@ def rhocalc(d, vars):
     vars['rhoTs'] = rhoTs
     vars['rhoEce'] = rhoEce
     vars['rad'] = rad
-    
+    print('--- RHO calc ok ---')
     return  1
     
 ################################################## Ranges and averages
@@ -319,8 +335,8 @@ def def_range_av(d,vars):
    temp_ece2 = tEce_v[:,idt2]/1000  # in keV
    err_ece2 = temp_ece2*eP
 
-   print('Dimensioni nell intervallo temporale di rhoTs = ',rhoTs2.shape)
-   print('Dimensioni nell intervallo temporale di rhoEce = ',rhoEce2.shape)
+   print('Shape of rhoTs in the time window = ',rhoTs2.shape)
+   print('Shape of rhoEce in the time window = ',rhoEce2.shape)
 
    dimTs = rhoTs2.shape[1]    # number of Time points TS
    dimEce = rhoEce2.shape[1]  # number of Time points TS
@@ -453,8 +469,8 @@ def def_range_av(d,vars):
    err_dist = np.sqrt((err_eceM_rho/2)**2+(err_tsM_rho/2)**2)
    err_dist_perc = (1/temp_eceM_rho)*(np.sqrt(temp_tsM_rho/temp_eceM_rho*err_eceM_rho)**2+(err_tsM_rho)**2)
    
-   print('Dimensioni temp_eceM_rho = ',temp_eceM_rho.shape)
-   print('Dimensioni temp_TsM_rho = ',temp_tsM_rho.shape)    
+   print(f'temp_eceM_rho shape = ',temp_eceM_rho.shape)
+   print('temp_TsM_rho shape = ',temp_tsM_rho.shape)    
    
    vars['temp_tsM_rho'] = temp_tsM_rho
    vars['err_tsM_rho'] = err_tsM_rho
@@ -468,11 +484,11 @@ def def_range_av(d,vars):
    vars['err_dist'] = err_dist
    vars['err_dist_perc'] = err_dist_perc
    # Si trova la matrice 'ranges' con tutti i valoori di rhoup/down a tutti gli istanti del TS
-   # Si trovano qiundi le due matrici: temp_eceM_rho e temp_tsM_rho 
+   # Si trovano quindi le due matrici: temp_eceM_rho e temp_tsM_rho 
    # che contengono i valori di Te a tutte le rho e a tutte gli istanti tra t1 e t2
    # assi temporali: timeTs2 e timeEce2
    # le posizioni: rTs e rEce
    
    # Print dei valori degli intervalli sui quali si effetttua la media
    tlim = vars['tlim'] # tempo al quale si ha la max Te-max
-   
+   print('----- RHO range calc ok ! -----')

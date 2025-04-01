@@ -17,19 +17,21 @@ import pickle
 plt.close('all')  
 
 # Selection of the shots for the Database
-shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526, 
-            104547, 104548 ,104549, 104550, 104551, 104553, 104554,104555,104558,104559,104560,
-            104574, 104575, 104990, 104991,104994] 
+# shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526, 
+            # 104547, 104548 ,104549, 104550, 104551, 104553, 104554,104555,104558,104559,104560,
+            # 104574, 104575, 104990, 104991,104994] 
+shots = [104522]#, 104549]
 # 104995: PSI not present
 # 
 DB = {} # Empty general database 
 
-saveDB = 1      # 0: don't save, 1: save the DB
-save_plot = 1
+saveDB = 0      # 0: don't save, 1: save the DB
+save_plot = 0
 save_figures = 0  # 0: don't save, 1: save the figures
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
 
-fig,ax=plt.subplots(1, num = 'ECE vs HRTS')
+fig,ax=plt.subplots(1, num = 'Overall ECE vs HRTS')
+
 for shot in shots:
     # plt.close('all')  
     JPN = shot
@@ -54,29 +56,25 @@ for shot in shots:
         }    
 
     #######################################################
-    ## Creo il dizionario con le variabili
+    ## Dictionary with variables is here cretaed. The DBwill contain vars and d dictionaries
     vars = mye.dictvar(d)
     #######################################################
     ## Compute the time window ti-tf for the analysis
     mye.tdef(d,vars)
-    print(' ###   tdef ok!!!!  ####')
     ## Calculates the PSI and the RHO coordinates of the lines of sights of the two diagnostics
     mye.psicalc(d,vars)   # PSI: Normalized poloidal flux coordinate
     mye.rhocalc(d, vars)  # RHO: Normalized toroidal flux coordinate
-    print('### PSI e RHO calc ok !!!!! ###')
-    ## calcola psi1,2 e rho1,2 prendendo come riferimento la situazione al tempo t=tlim
-    ## vedi dettagli nella libreria. Alternativamente si possono inserire manuamente i valori
+    ## To calculate the instanteous ranges of Rho where the average is performed
+    ## Details on library file
     mye.def_range_av(d,vars) 
-    # mye.man_range(d,vars)
-    print('### Def range ok !!!!! ###')
-    
+    # All the plots are created here:
     # graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
     # graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
     # graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
     # graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
     # graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
     # graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-    # graph.fig_rat_dist(d,vars)     # CONTROLLARE!!!
+    # graph.fig_rat_dist(d,vars)   # Check the Ratio and errors! Plot ratio and difference of Te values over time or temperature
     
     ######################
     shot = d['shot']
@@ -99,10 +97,8 @@ for shot in shots:
     x = np.linspace(left-0.5,right+0.5,timeTs2.shape[0])   # Range in keV di dove tracciare la retta
     y = retta(x)  
     
-    # fig,ax=plt.subplots(1, num = 'ECE vs HRTS')
-    # ax.scatter(temp_eceM_rho, temp_tsM_rho,label='Rho Averaged ECE vs TS ') 
     ax.plot(x,y,'g--', lw=.8)
-    ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='x', s=3, color = 'blue', facecolors='none', edgecolors='b', linewidth=.2, label='ECE vs TS')
+    ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='+', s=3, color = 'blue', edgecolors='b', linewidth=1, label='ECE vs TS') #, facecolors='none',
     # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr = err_tsM_rho, yerr = err_eceM_rho, 
     #               marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5, label='ECE vs TS')
     ax.set_title(f'Te Ece-Michelson vs Te HRTS  for {len(shots)} shots between JPN {shots[0]} and JPN {shots[-1]}') 

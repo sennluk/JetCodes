@@ -1,0 +1,1 @@
+{'shot': 104559, 'Tref': 1.5, 'window_size': 3, 'min_increase': 0.0, 'd2': 0.08, 'np': 2, 'fix': 0.01, 'intPsi': 0.1, 'delta': 3, 'rad': 3.05, 'psi1': 0.003, 'psi2': 0.027, 'eP': 0.02, 'win_len': 15, 'deg_pol': 3, 'savefigs': 1, 'mypath': '/home/lsenni/Python_LS/Cfr_TeTs/20250210-162203_Plots/JPN_104559_Plots/'}
