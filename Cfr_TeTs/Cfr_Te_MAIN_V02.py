@@ -28,7 +28,7 @@ V01: partendo dalla V=00 (e librerie legate) funzionante, vado eliminando cose s
 """
 # Branch new_plot - 24/03/2025
 import matplotlib.pyplot as plt
-import Cfr_Te_LIB_V02 as mye
+import Cfr_Te_LIB_V02_Prova_Vars as mye
 import Cfr_Te_PLOTS_V02 as graph
 import time
 

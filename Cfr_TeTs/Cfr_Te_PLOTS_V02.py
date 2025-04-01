@@ -481,29 +481,29 @@ def fig_cfr_rho(d, vars): #shot, w, tlim1, tlim2, delta, psi1, psi2, xm, err_xm,
  
  #### Figura per articolo, cercando di rispettare le proporzioni
     
-    import tkinter as tk
-    root = tk.Tk()
-    screen_width = root.winfo_screenwidth() / root.winfo_fpixels('1i')  # Larghezza in pollici
-    screen_height = root.winfo_screenheight() / root.winfo_fpixels('1i')  # Altezza in pollici
-    root.destroy()  # Chiudi la finestra Tkinter
+    # import tkinter as tk
+    # root = tk.Tk()
+    # screen_width = root.winfo_screenwidth() / root.winfo_fpixels('1i')  # Larghezza in pollici
+    # screen_height = root.winfo_screenheight() / root.winfo_fpixels('1i')  # Altezza in pollici
+    # root.destroy()  # Chiudi la finestra Tkinter
     
-    # Crea la figura con la stessa dimensione dello schermo
-    fig, ax = plt.subplots(figsize=(screen_width, screen_height), dpi=100)  
+    # # Crea la figura con la stessa dimensione dello schermo
+    # fig, ax = plt.subplots(figsize=(screen_width, screen_height), dpi=100, num = f'JPN {shot} ECE vs HRTS - Big')  
     
-    # Plotta i dati
-    ax.plot(x, y, 'g--', lw=.8, label=r'$T_e$-ECE = $T_e$-HRTS')
-    ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr=err_tsM_rho, yerr=err_eceM_rho, 
-                marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5)
-    fsize = 22
-    # Label e legenda
-    ax.tick_params(axis='both',labelsize=20)
-    ax.set_xlabel(r'$T_e$-HRTS (keV)', fontsize = fsize)
-    ax.set_ylabel(r'$T_e$-ECE (keV)', fontsize = fsize)
-    ax.legend(fontsize = fsize, loc="upper left")
-    fig.tight_layout()
-    fig.canvas.draw()
-    plt.savefig('Fig_08_2_Tece_vs_Tts.pdf', bbox_inches="tight", dpi=100)  # Usa lo stesso dpi per mantenere le proporzioni
-    plt.show()
+    # # Plotta i dati
+    # ax.plot(x, y, 'g--', lw=.8, label=r'$T_e$-ECE = $T_e$-HRTS')
+    # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr=err_tsM_rho, yerr=err_eceM_rho, 
+    #             marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5)
+    # fsize = 22
+    # # Label e legenda
+    # ax.tick_params(axis='both',labelsize=20)
+    # ax.set_xlabel(r'$T_e$-HRTS (keV)', fontsize = fsize)
+    # ax.set_ylabel(r'$T_e$-ECE (keV)', fontsize = fsize)
+    # ax.legend(fontsize = fsize, loc="upper left")
+    # fig.tight_layout()
+    # fig.canvas.draw()
+    # plt.savefig('Fig_08_2_Tece_vs_Tts.pdf', bbox_inches="tight", dpi=100)  # Usa lo stesso dpi per mantenere le proporzioni
+    # plt.show()
     
 ##########################################
 # plot ratio vs time and difference vs time

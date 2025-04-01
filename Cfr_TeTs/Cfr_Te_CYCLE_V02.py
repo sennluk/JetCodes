@@ -17,16 +17,17 @@ import pickle
 plt.close('all')  
 
 # Selection of the shots for the Database
-# shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526, 
-            # 104547, 104548 ,104549, 104550, 104551, 104553, 104554,104555,104558,104559,104560,
-            # 104574, 104575, 104990, 104991,104994] 
-shots = [104522]#, 104549]
+shots =  [104520, 104521, 104522, 104523, 104524, 104525, 104526, 
+            104547, 104548 ,104549, 104550, 104551, 104553, 104554,104555,104558,104559,104560,
+            104574, 104575, 104990, 104991, 104994] 
+# shots = [104522, 104549]
+# 104991: XCS is not present..for the multiplot
 # 104995: PSI not present
 # 
 DB = {} # Empty general database 
 
-saveDB = 0      # 0: don't save, 1: save the DB
-save_plot = 0
+saveDB = 1      # 0: don't save, 1: save the DB
+save_plot = 1
 save_figures = 0  # 0: don't save, 1: save the figures
 timestr = time.strftime("%Y%m%d-%H%M%S") # Date format for the folder name generation
 
@@ -67,14 +68,15 @@ for shot in shots:
     ## To calculate the instanteous ranges of Rho where the average is performed
     ## Details on library file
     mye.def_range_av(d,vars) 
+    
     # All the plots are created here:
-    # graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
-    # graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
-    # graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
-    # graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
-    # graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
-    # graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
-    # graph.fig_rat_dist(d,vars)   # Check the Ratio and errors! Plot ratio and difference of Te values over time or temperature
+    graph.multiplot(d,vars)      # Multiplot: general shot charachteristics
+    graph.tprof(d,vars)          # Plot Te time trend at R = Rad for Ece-KK1 and HRTS + Errorbars
+    graph.magax(d,vars)          # Plot of the EFIT position of the magnetic axis over time
+    graph.rho_fig(d, vars)       # Perform the plots for evaluating the RHO (automatic) calculation for HRTS and ECE at t=tlim and profiles
+    graph.te_trends(d,vars)      # Plot of the time trend of the electron temperature
+    graph.fig_cfr_rho(d, vars)   # Plot the direct comparison (mean in RHO) with errorbars - based on the slowest diagnostic (HRTS)
+    graph.fig_rat_dist(d,vars)   # Check the Ratio and errors! Plot ratio and difference of Te values over time or temperature
     
     ######################
     shot = d['shot']
@@ -96,7 +98,7 @@ for shot in shots:
     
     x = np.linspace(left-0.5,right+0.5,timeTs2.shape[0])   # Range in keV di dove tracciare la retta
     y = retta(x)  
-    fig,ax=plt.subplots(1, num = 'Overall ECE vs HRTS')
+    # fig,ax=plt.subplots(1, num = 'Overall ECE vs HRTS')
     ax.plot(x,y,'g--', lw=.8)
     ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='+', color = 'blue', linewidth=0.6, label='ECE vs TS') #, s=3,  edgecolors='b', facecolors='none',
     # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr = err_tsM_rho, yerr = err_eceM_rho, 
@@ -113,12 +115,12 @@ for shot in shots:
 n = len(shots)
 
 if save_plot == 1:
-    with open("plot.pkl", "wb") as f:
+    with open("Plot_Oveall.pkl", "wb") as f:
         pickle.dump(fig, f)
 
 if saveDB == 1:
     try:
-        with open(f"DB_{n}_Shots_V03.pkl", "wb") as f:
+        with open(f"DB_{n}_Shots_V04.pkl", "wb") as f:
             pickle.dump(DB, f)
     except FileExistsError:
         print(" 'DB.pkl' already exist!")
