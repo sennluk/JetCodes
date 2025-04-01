@@ -96,9 +96,9 @@ for shot in shots:
     
     x = np.linspace(left-0.5,right+0.5,timeTs2.shape[0])   # Range in keV di dove tracciare la retta
     y = retta(x)  
-    
+    fig,ax=plt.subplots(1, num = 'Overall ECE vs HRTS')
     ax.plot(x,y,'g--', lw=.8)
-    ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='+', s=3, color = 'blue', edgecolors='b', linewidth=1, label='ECE vs TS') #, facecolors='none',
+    ax.scatter(temp_tsM_rho, temp_eceM_rho, marker='+', color = 'blue', linewidth=0.6, label='ECE vs TS') #, s=3,  edgecolors='b', facecolors='none',
     # ax.errorbar(temp_tsM_rho, temp_eceM_rho, xerr = err_tsM_rho, yerr = err_eceM_rho, 
     #               marker='o', markersize=3, ecolor='g', linestyle='none', elinewidth=.5, label='ECE vs TS')
     ax.set_title(f'Te Ece-Michelson vs Te HRTS  for {len(shots)} shots between JPN {shots[0]} and JPN {shots[-1]}') 
