@@ -26,6 +26,8 @@ import my_manage_file as mym
 # Definisco il dizionario delle variabili
 
 def dictvar(d):
+    print('------------ Start new shot!!! ------------')
+    print('JPN = ', d['shot'])
  
     vars = {
         'tTs_v' : None,     # HRTS Te for all the times and positions 
@@ -37,7 +39,8 @@ def dictvar(d):
         'psiTs_r' : None,   # position for HRTS PSI values for the LoS at each time
         'zTs_v' : None,     # HRTS z Coords of the LoS
         'zTs_r' : None,     # HRTS R Coords of the LoS
-        'tmax' : None,      # HRTS max Te for each time
+        'tmax_v' : None,      # HRTS max Te for each time (Tmax channel)
+        'tmax_t' : None,      # HRTS max Te for each time (Tmax channel) - time
         'tEce_v' : None,    # ECE-KK1 Te for all the times and positions 
         'tEce_t' : None,    # ECE-KK1time instant values
         'tEce_r' : None,    # ECE-KK1 positions of the measurements in Major Radius coord 
@@ -51,7 +54,7 @@ def dictvar(d):
         'ti' : None,        # Initial time instant considered for the analisys
         'tf' : None,        # Final time instant considered for the analisys
         'tlim' : None,      # Time at which Tmax HRTS is max
-        'tmax' : None,      #  Max Te of the HRTS (Tmax channel)
+        'maxT_hrts' : None, #  Max Te of the Tmax (HRTS) channel over the whole shot
         'Ti' : None,        # Temp HRTS/max dell'istante iniziale
         'Tf' : None,        # Temp HRTS/max dell'istante finale
         'rad' : None,       # Position of the plasma center a
@@ -63,30 +66,19 @@ def dictvar(d):
         'psiKk1' : None,    # PSI coordinates on the ECE-KK1 data points
         'psiTscalc' : None, # HRTS PSI Computed to check the correctnes of the data Channel iused
         'rhoKk1' : None,    # ECE-KK1 LoS PSI coordinates 
-        # 'time_ts' : None,
-        # 'time_ece' : None,
         'rhoTs' : None,     #RHO coordinates on the HRTS data points
         'rhoEce' : None,    # RHO coordinates on the ECE-KK1 data points
-        # 'temp_tsM' : None,  
-        # 'err_tsM': None,
         'timeTs2' : None,     # TS time instants in the ti-tf window
         'timeEce22' : None,   # ECE time instants closest to the TS ones in the ti-tf window     '
         'ranges' : None,      # RHO ranges as calculated by the automatic procedure at each HRTS time- TS interpolated in t1<t<t2
-        # 'xm': None,  
-        # 'err_xm' : None, 
-        # 'temp_eceM' : None, 
-        # 'err_eceM' : None, 
-        # 'xm12': None, 
-        # 'err_xm12' : None, 
-        # 'temp_eceM12' : None, 
-        # 'err_eceM12' : None, 
         'temp_tsM_rho' : None,   # Te values averaged over the rho1-rho2 interval for HRTS
         'err_tsM_rho' : None,    # Error on HRTS Te values averaged over the rho1-rho2 interval
         'temp_eceM_rho' : None,  # Te values averaged over the rho1-rho2 interval for ECE
         'err_eceM_rho' : None,   # Error on ECE Te values averaged over the rho1-rho2 interval
         'ratio' : None,          # Ratio between temperaure values (averaged) - TO BE double-checked!
         'distance' : None,       # Difference between temperaure values (averaged)
-        'err_dist' : None        # Computed error to be associated to the difference
+        'err_dist' : None,       # Computed error to be associated to the difference
+        'err_dist_perc' : None   # Computed error to be associated to the difference/Tece
         } 
     
     shot = d['shot']
@@ -103,8 +95,9 @@ def dictvar(d):
     vars['psiTs_r'] = w.hrts.psi.r      # HRTS PSI values for the LoS at each time
     vars['zTs_v'] = w.hrts.z.v
     vars['zTs_r'] = w.hrts.z.r
-    vars['tmax'] = w.hrtx.tmax      # HRTS max temperature for each time
-    
+    vars['tmax_v'] = w.hrtx.tmax.v      # HRTS max temperature for each time - values
+    vars['tmax_t'] = w.hrtx.tmax.t      # HRTS max temperature for each time - time instants
+      
     vars['tEce_v'] = w.ecm1.prfl.v  # ECE-KK1 Te for all the times and positions 
     vars['tEce_t'] = w.ecm1.prfl.t  # ECE-KK1time instant values
     vars['tEce_r'] = w.ecm1.prfl.r  # ECE-KK1 positions of the measurements in Major Radius coord 
@@ -125,7 +118,8 @@ def dictvar(d):
         # mym.save_print_output_to_file(d,vars)
     else:
         print('You are not saving the plots')
-    
+        
+    print(f'--- Dict vars JPN {shot} created! ---')
     return vars
 
 ##################################################
@@ -136,13 +130,36 @@ def tdef(d,vars):
     Tref = d['Tref']
     window_size = d['window_size']
     min_increase = d['min_increase']
+    tmax_v = vars['tmax_v']
+    tmax_t = vars ['tmax_t']
+    tlim1 = vars['ti']
+    tlim2 = vars['tf']
+    #####
+    print('t lim1 = ', tlim1, ' None = Automatically computed')
+    print('t lim2 = ', tlim2, ' None = Automatically computed')
     #####################################
-    tmax = vars['tmax']/1000     # max Te max hrts (hrtx channel) in keV
-    data = tmax.v[0,:]
+    # tmax = vars['tmax_v']/1000     # max Te max hrts (hrtx channel) in keV
+    data = tmax_v[0,:]/1000
     # prendo come tlim l'istante in cui la Tmax è massima
-    valid_indices = np.where(tmax.t <= 60)[0]
-    tlim = tmax.t[np.nanargmax(tmax.v[0,valid_indices])] 
-    ind_tlim = np.nanargmax(tmax.v[0,valid_indices])
+    # valid_indices = np.where((tmax_t > 42) & (tmax_t <= 60))[0]
+    
+    # Spikes removal
+    sogliola = 2 # Threshold (keV)
+    def remove_spikes(signal, threshold):
+        signal_filtered = signal.copy()
+        for i in range(1, len(signal) - 1):  # Escludiamo il primo e l'ultimo punto
+            if (signal[i] > signal[i-1] * threshold) and (signal[i] > signal[i+1] * threshold):
+                signal_filtered[i] = (signal[i-1] + signal[i+1]) / 2  # Media dei vicini
+        return signal_filtered
+    
+    # Applichiamo il filtro
+    filtered_signal = remove_spikes(data, sogliola)
+    
+    valid_indices = np.where(tmax_t <= 60)[0]
+    # tlim = tmax_t[np.nanargmax(tmax_v[0,valid_indices])] 
+    tlim = tmax_t[np.nanargmax(filtered_signal[valid_indices])] 
+    # ind_tlim = np.nanargmax(tmax_v[0,valid_indices])
+    ind_tlim = np.nanargmax(filtered_signal[valid_indices])
     TMAX = data[ind_tlim]
     
     def moving_average_np(data, window_size):
@@ -176,40 +193,34 @@ def tdef(d,vars):
     
     if rising_index is not None:
         rising_value = data[rising_index]
-        print(f"I dati iniziano a salire all'indice {rising_index}, valore: {rising_value}")
+        print(f"Data start rising at index= {rising_index} - Initial Temp.: {rising_value:.2f} keV")
         
         # Trova il punto di ritorno
         return_index = find_return_point_np(data, ind_tlim, rising_value-0.2)
         Tfin = data[return_index]
         if return_index is not None:
-            print(f"L'indice finale è: {return_index}, corrispondente ad una valore: {Tfin}")
+            print(f"Final index= {return_index} - Final Temp.: {Tfin:.2f} keV")
         else:
-            print(f"I dati non tornano più al valore {rising_value}.")
+            print(f"Data no longer return to value {rising_value:.2f} keV")
 
     #####################
     Ti = rising_value          # Temp istante inizale
     Tf = data[return_index]    # Temp istante finale
        
-    ti = tmax.t[rising_index]  # Istante iniziale
-    tf= tmax.t[return_index]   # Istante finale
-
-    tlim1 = vars['ti']
-    tlim2 = vars['tf']
+    ti = tmax_t[rising_index]  # Istante iniziale
+    tf= tmax_t[return_index]   # Istante finale
     
     vars['ti'] = ti
     vars['tf'] = tf
     vars['Ti'] = Ti
     vars['Tf'] = Tf
     vars['tlim'] = tlim
-    vars['tmax'] = TMAX
+    vars['maxT_hrts'] = TMAX
     
-    print('JPN = ', d['shot'])
-    print("Automated tlim1 =", ti)
-    print("Automated tlim2 =", tf)
-    print('t lim1 = ', tlim1)
-    print('t lim2 = ', tlim2)
-    print('Instant of the max Tmax=', tlim)
-    
+    print("Automated tlim1 =", ti, 'sec')
+    print("Automated tlim2 =", tf, 'sec')
+    print('Instant of the max Tmax =', tlim, 'sec')
+    print('--- time range calc ok! ---')
     return 1
 ##################################################
 # Compute PSI on ECE LoS coords (HRTS has his channel available) 
@@ -231,7 +242,7 @@ def psicalc(d, vars):
         psiKk1[:,i] = psi
    
     vars['psiKk1'] = psiKk1      
-    
+    print('--- PSI calc ok ---')
     return 1
 ##################################################
 # Compute RHO on ECE and HRTS LoSs
@@ -280,21 +291,22 @@ def rhocalc(d, vars):
     vars['rhoTs'] = rhoTs
     vars['rhoEce'] = rhoEce
     vars['rad'] = rad
-    
+    print('--- RHO calc ok ---')
     return  1
     
 ################################################## Ranges and averages
 # Computes the RHO ranges for each of the slowest Diagnostics (HRTS)
 # compute the values of ECE nearest to the same instants
-# Perform the averages on the selctes RHO ranges, instant by instnat 
+# Perform the averages on the seleted RHO ranges, instant by instnat 
 # of the Te values and errors for both ECE and HRTS
 # il 2 finale indica la grandezza nell'intervallo ti-tf
-# il 22 indica che la medesima grandezza è stata calcolate nei punti piuù vicini
-# a quella più lenta, sempre nellintervallo ti-tf
+# il 22 indica che la medesima grandezza è stata calcolate nei punti più vicini
+# a quella più lenta, sempre nell'intervallo ti-tf
  
 def def_range_av(d,vars):
    eP = d['eP']
    d2 = d['d2']
+   numero_punti = d['np']
    ti = vars['ti']
    tf = vars['tf'] 
    tTs_v = vars['tTs_v']
@@ -323,8 +335,8 @@ def def_range_av(d,vars):
    temp_ece2 = tEce_v[:,idt2]/1000  # in keV
    err_ece2 = temp_ece2*eP
 
-   print('Dimensioni nell intervallo temporale di rhoTs = ',rhoTs2.shape)
-   print('Dimensioni nell intervallo temporale di rhoEce = ',rhoEce2.shape)
+   print('Shape of rhoTs in the time window = ',rhoTs2.shape)
+   print('Shape of rhoEce in the time window = ',rhoEce2.shape)
 
    dimTs = rhoTs2.shape[1]    # number of Time points TS
    dimEce = rhoEce2.shape[1]  # number of Time points TS
@@ -361,13 +373,13 @@ def def_range_av(d,vars):
        temp_ece22[:,i] = temp_ece2[:,iEce] 
        err_ece22[:,i] = err_ece2[:,iEce] 
        
-       mTs= np.nanmin(rhoTs2[:,i])     # min rho Ts at the ith indice    
+       mTs = np.nanmin(rhoTs2[:,i])         # min rho Ts at the ith indice    
        indT = np.nanargmin(rhoTs2[:,i])   
        posT = rTs[indT]  
        
-       mEce = np.nanmin(rhoEce2[:,iEce])   # min rho Ece at the i-th indice
-       indE = np.nanargmin(rhoEce2[:,iEce]) # indice del minimo sopra calcolato
-       posE = rEce[indE]                  # Position of the rho ECE minimum val
+       mEce = np.nanmin(rhoEce2[:,iEce])     # min rho Ece at the i-th indice
+       indE = np.nanargmin(rhoEce2[:,iEce])  # indice del minimo sopra calcolato
+       posE = rEce[indE]                     # Position of the rho ECE minimum val
        
        M = np.max([mEce,mTs])        # Trovo il massimo tra i due minimi
        ind = np.argmax(([mEce,mTs])) # per definire la diagnostica sulla Los della quale si trova il max:
@@ -380,48 +392,60 @@ def def_range_av(d,vars):
        # e vedo il punto più vicino della medesima curva
        # Come RHO-UP prendo poi il massimo dei due valori trovati + 0.001
        
-       diagM = diag[ind]  # La diagnostica che ha il massimo tra i due minimi
+       diagM = diag[ind]      #Le coord RHo della diagnostica che ha il massimo tra i due minimi
        radii = rDiag[ind]     # Le posiszioni della diagnostica di cui sopra
        
-       pos1 = pos[ind]- d2  # Posizione a distanza d/2 dal centro plasma
+       pos1 = pos[ind] - d2    # Posizione a distanza d/2 dal centro plasma (minimo rho)
        pos2 = pos[ind] + d2
        
-       idt1 = np.nanargmin(abs(radii-pos1)) # indice1 più vicino sulla curva più alta
-       idt2 = np.nanargmin(abs(radii-pos2))
-       # vettore dei valori più vicino alla posizione estrema dell'intervallo 
-       #(per la diagn che ha il max tra i due min)
+       idt1 = np.nanargmin(abs(radii-pos1))    # indice 1 più vicino alla pos 1 sulla curva più alta
+       idt2 = np.nanargmin(abs(radii-pos2))    # indice 2 più vicino alla pos 2 sulla curva più alta
+       
+       # Creo 'temp': il vettore con gli indici dei tempi per Ts e ECE 
+       # NO: un vettore dei valori più vicino alla posizione estrema dell'intervallo 
+       # NO:  (per la diagn che ha il max tra i due min)
        temp = [iEce,i]
-       indice1 = temp[ind]
-       pippo = [v1,v2] = [diagM[idt1,indice1],diagM[idt2,indice1]] 
-        
-       siaM = np.max(pippo) # Seleziono il pun to più alto tra i due, da scegliere come rho-up
+       indice1 = temp[ind]  # Prendo come indice quello per la diagnostica che ho selezionato come curva 'più alta'
+       # Creo pippo: contiene i due valori agli estremi della diagnostica 'superiore', 
+       # per vedere quale dei due è più alto all'istante di tempo in analisi
+       pippo = [v1,v2] = [diagM[idt1,indice1],diagM[idt2,indice1]] # array con 
+       #  
+       siaM = np.max(pippo) # Seleziono il punto più alto tra i due, da scegliere come rho-up
        rhoup = siaM + 0.0001 # aggiungo un piccolo delta di sicurezza
        
        #############################
        # RHO down
        # Trovo il punto più vicino della diag non considerata prima
-       # seleziono l'altra diagnostica: minimo rta i due massimi
+       # seleziono l'altra diagnostica: minimo tra i due massimi
        indx = np.argmin(([mEce,mTs]))   # Trovo il minimo tra i due minimi
-       rm = rDiag[indx]     # Le posiszioni della diagnostica di cui sopra
-       diagm = diag[indx]      # seleziono la diagnostica 'piu bassa'
-       # trovo l'indice del punto con rho piu vicina al minimo dell'altra:
+       rm = rDiag[indx]                 # Le posiszioni della diagnostica di cui sopra
+       diagm = diag[indx]               # seleziono la diagnostica 'piu bassa'
+       # Trovo l'indice del punto con rho piu vicina al minimo dell'altra:
        # avendo assi temporali diversi devo secegliere indici diversi a secondo del caso    
+       # ripentedo il criterio già usato prima,
        temp = [iEce,i]
        indice2 = temp[indx]
        id_pluto = np.nanargmin(abs(diagm[:,indice2]-M)) 
-       pluto = diagm[id_pluto,i]
+       # Creo 'pluto' che contiene il valore della diagnostica 'piu bassa' all'istante selezionato, più
+       # vicino al valore del massimo tra i due minimi:M
+       pluto = diagm[id_pluto,indice2]
        
-       rm = rDiag[indx]     # posizioni radiali della diagostica 'minore'
-       pos_pluto = rm[id_pluto]
+       rm = rDiag[indx]             # selezionop la diagnostica 'più bassa'
+       pos_pluto = rm[id_pluto]     # Posizioni radiali della diagostica 'più bassa'
        
-       # se il punto è prima del minimo aggiungo due punti per determinare la rho down
-       # se invece è dopo, ne tolgo due
+       # Se la posizione del punto è prima del minimo aggiungo 'numero_punti' punti e determino la rho down
+       # se invece è dopo, ne tolgo 'numero_punti'
        # in ambedue i casi tolgo poi un piccolo margine
-       if id_pluto < indT:
-           rhodown = diagm[id_pluto+d['np'],indice2] - 0.001
+       if pos_pluto < pos[ind]:
+           rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
        else:
-           rhodown = diagm[id_pluto-d['np'],indice2] - 0.001
-       ranges[i,:] = [rhodown,rhoup]       
+           rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
+       ranges[i,:] = [rhodown,rhoup]   
+       # if id_pluto < indT:
+       #     rhodown = diagm[id_pluto+numero_punti,indice2] - 0.001
+       # else:
+       #     rhodown = diagm[id_pluto-numero_punti,indice2] - 0.001
+       # ranges[i,:] = [rhodown,rhoup]       
        
        mask = (rhoTs2[:,i] >= rhodown) & (rhoTs2[:,i] <= rhoup)    # Seleziono gli indici dei tempi di interesse 
        temp = temp_ts2[mask,i]                    # Valori di temperaatura nelle rho selezionate
@@ -442,10 +466,11 @@ def def_range_av(d,vars):
 
    ratio = temp_eceM_rho/temp_tsM_rho     # Ratio between temperaure values (averaged)
    distance = temp_eceM_rho-temp_tsM_rho  # Difference between temperaure values (averaged)
-   err_dist = np.sqrt(err_eceM_rho**2+err_tsM_rho**2)
+   err_dist = np.sqrt((err_eceM_rho/2)**2+(err_tsM_rho/2)**2)
+   err_dist_perc = (1/temp_eceM_rho)*(np.sqrt(temp_tsM_rho/temp_eceM_rho*err_eceM_rho)**2+(err_tsM_rho)**2)
    
-   print('Dimensioni temp_eceM_rho = ',temp_eceM_rho.shape)
-   print('Dimensioni temp_TsM_rho = ',temp_tsM_rho.shape)    
+   print(f'temp_eceM_rho shape = ',temp_eceM_rho.shape)
+   print('temp_TsM_rho shape = ',temp_tsM_rho.shape)    
    
    vars['temp_tsM_rho'] = temp_tsM_rho
    vars['err_tsM_rho'] = err_tsM_rho
@@ -457,8 +482,13 @@ def def_range_av(d,vars):
    vars['ratio'] = ratio
    vars['distance'] = distance
    vars['err_dist'] = err_dist
+   vars['err_dist_perc'] = err_dist_perc
    # Si trova la matrice 'ranges' con tutti i valoori di rhoup/down a tutti gli istanti del TS
-   # Si trovano qiundi le due matrici: temp_eceM_rho e temp_tsM_rho 
+   # Si trovano quindi le due matrici: temp_eceM_rho e temp_tsM_rho 
    # che contengono i valori di Te a tutte le rho e a tutte gli istanti tra t1 e t2
    # assi temporali: timeTs2 e timeEce2
    # le posizioni: rTs e rEce
+   
+   # Print dei valori degli intervalli sui quali si effetttua la media
+   tlim = vars['tlim'] # tempo al quale si ha la max Te-max
+   print('----- RHO range calc ok ! -----')
